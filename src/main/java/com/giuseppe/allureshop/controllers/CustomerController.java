@@ -1,7 +1,7 @@
-package com.giusepppe.allureshop.controllers;
+package com.giuseppe.allureshop.controllers;
 
-import com.giusepppe.allureshop.models.Customer;
-import com.giusepppe.allureshop.services.CustomerService;
+import com.giuseppe.allureshop.models.Customer;
+import com.giuseppe.allureshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;

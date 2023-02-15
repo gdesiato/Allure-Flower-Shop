@@ -1,6 +1,6 @@
-package com.giusepppe.allureshop.models;
+package com.giuseppe.allureshop.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -8,8 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "customer")
 @Builder
-@Getter
-@Setter
+@Data
 public class Customer {
 
     @Id
@@ -21,7 +20,7 @@ public class Customer {
     private Integer age;
     private String address;
 
-    @OneToMany
-    private FlowerComposition flowerComposition;
+//    @OneToMany
+//    private FlowerComposition flowerComposition;
 
 }

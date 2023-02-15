@@ -1,4 +1,4 @@
-package com.giusepppe.allureshop.configuration;
+package com.giuseppe.allureshop.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
