@@ -1,9 +1,10 @@
-package com.giusepppe.allureshop.dontrollers;
+package com.giusepppe.allureshop.controllers;
 
 import com.giusepppe.allureshop.models.Customer;
 import com.giusepppe.allureshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,13 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @GetMapping("/new")
+    public String showNewCustomerPage(Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
+        return "new-customer";
+    }
 
     @GetMapping
     public List<Customer> getAllCustomers() {
