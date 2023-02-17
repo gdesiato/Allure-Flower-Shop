@@ -1,16 +1,15 @@
 package com.giuseppe.allureshop.models;
 
 
-import jakarta.persistence.*;
 import lombok.*;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "flower")
 @Builder
-@Setter
-@Getter
+@Data
 public class Flower {
 
     @Id

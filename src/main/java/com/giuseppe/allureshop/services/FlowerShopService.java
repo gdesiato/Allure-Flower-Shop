@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FlowerShopService {
-    public List<Flower> getAllFlowers();
-    public Optional<Flower> getFlowerById(long id);
-    public FlowerComposition createComposition(List<Long> flowerIds);
+    List<Flower> getAllFlowers();
+    Optional<Flower> getFlowerById(long id);
+    FlowerComposition createComposition(List<Long> flowerIds);
 }
