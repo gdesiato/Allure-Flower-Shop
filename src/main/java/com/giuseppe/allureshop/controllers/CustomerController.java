@@ -4,14 +4,15 @@ import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/customers")
+@Controller
+@RequestMapping("/customer")
 public class CustomerController {
 
     @Autowired
@@ -22,6 +23,15 @@ public class CustomerController {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
         return "new-customer";
+    }
+
+    @PostMapping("/save")
+    // As the Model is received back from the view, @ModelAttribute
+    // creates a Customer based on the object you collected from
+    // the HTML page above
+    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+        customerService.saveCustomer(customer);
+        return "redirect:/";
     }
 
     @GetMapping
