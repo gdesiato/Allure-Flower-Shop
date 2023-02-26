@@ -25,7 +25,7 @@ public class CustomerController {
         return "new-customer";
     }
 
-    @PostMapping("/save")
+    @PostMapping(value ="/save")
     // As the Model is received back from the view, @ModelAttribute
     // creates a Customer based on the object you collected from
     // the HTML page above

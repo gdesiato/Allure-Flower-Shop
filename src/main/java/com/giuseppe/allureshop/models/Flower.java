@@ -22,4 +22,5 @@ public class Flower {
     @Column(name = "price")
     private double price;
 
+
 }
