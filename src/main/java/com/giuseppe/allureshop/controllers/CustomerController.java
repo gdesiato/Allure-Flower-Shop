@@ -3,13 +3,11 @@ package com.giuseppe.allureshop.controllers;
 import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -34,18 +32,27 @@ public class CustomerController {
         return "redirect:/";
     }
 
-    @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    @GetMapping("/list")
+    public String customerList(Model model) {
+        List<Customer> customerList = customerService.getAllCustomers();
+        if (!customerList.isEmpty()) {
+            model.addAttribute("customerList", customerList);
+        }
+        return "customer-list";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
-        Optional<Customer> customer = customerService.getCustomerById(id);
-        if (!customer.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(customer.get());
+    public String getCustomerById(@PathVariable Long id, Model model) {
+        Customer customer = customerService.getCustomerById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        model.addAttribute("customer", customer);
+        return "customer-by-id";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable(name = "id") Long id) {
+        customerService.deleteCustomer(id);
+        return "redirect:/";
     }
 
     @PostMapping
@@ -53,22 +60,13 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id,
-                                                   @RequestBody Customer customer) {
+    @PutMapping("update/{id}")
+    public String updateCustomer(@PathVariable Long id, @ModelAttribute("customer") Customer customer) {
         if (!customerService.getCustomerById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
+            return "redirect:/list";
         }
-        return ResponseEntity.ok(customerService.updateCustomer(id, customer));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
-        if (!customerService.getCustomerById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        customerService.deleteCustomer(id);
-        return ResponseEntity.noContent().build();
+        customerService.updateCustomer(id, customer);
+        return "redirect:/customer/" + id;
     }
 }
 

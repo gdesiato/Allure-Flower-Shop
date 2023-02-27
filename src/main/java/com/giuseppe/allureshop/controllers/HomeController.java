@@ -10,4 +10,16 @@ public class HomeController {
     public String homePage(){
         return "home";
     }
+
+    // NAVIGATION BAR
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
+    @GetMapping("/explore")
+    public String explore() {
+        return "explore";
+    }
 }
