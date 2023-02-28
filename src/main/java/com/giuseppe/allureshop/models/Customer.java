@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * Represents a customer model in the flower shop.
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +22,6 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String email;
-    private Integer age;
     private String address;
 
 

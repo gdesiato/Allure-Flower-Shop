@@ -26,43 +26,42 @@
 		.active {
 			background-color: #4CAF50;
 		}
+        .image-container {
+            margin: 10px;
+        }
 	</style>
 </head>
 <body>
-    <nav>
-        <a class="active" href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/explore">Explore</a>
-        <a href="/login">Log In / Sign Up</a>
-    </nav>
+<nav>
+    <a class="active" href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/explore">Explore</a>
+    <a href="/login">Log In / Sign Up</a>
+</nav>
 
-    <div class="container">
-        <h1>Explore</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="https://images.unsplash.com/photo-1593078903327-98bcbcce2d5c" class="img-fluid">
-            </div>
-            <div class="col-md-4">
-                <img src="https://images.unsplash.com/photo-1559847844-5315691f9b3e" class="img-fluid">
-            </div>
-            <div class="col-md-4">
-                <img src="https://images.unsplash.com/photo-1527004015983-325dfc1b97ae" class="img-fluid">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="https://images.unsplash.com/photo-1521791543574-79d14a85a080" class="img-fluid">
-            </div>
-            <div class="col-md-4">
-                <img src="https://images.unsplash.com/photo-1559839844-fd6baaafe6d3" class="img-fluid">
-            </div>
-            <div class="col-md-4">
-                <img src="https://images.unsplash.com/photo-1579993515282-79b9c9f0cecb" class="img-fluid">
-            </div>
-        </div>
+<div class="container d-flex flex-wrap">
+    <h1>Explore</h1>
+    <div class="image-container">
+        <img src="https://unsplash.com/photos/hX_hf2lPpUU" class="img-fluid">
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <div class="image-container">
+        <img src="https://images.unsplash.com/photo-1559847844-5315691f9b3e" class="img-fluid">
+    </div>
+    <div class="image-container">
+        <img src="https://images.unsplash.com/photo-1527004015983-325dfc1b97ae" class="img-fluid">
+    </div>
+    <div class="image-container">
+        <img src="https://images.unsplash.com/photo-1521791543574-79d14a85a080" class="img-fluid">
+    </div>
+    <div class="image-container">
+        <img src="https://images.unsplash.com/photo-1559839844-fd6baaafe6d3" class="img-fluid">
+    </div>
+    <div class="image-container">
+        <img src="https://images.unsplash.com/photo-1579993515282-79b9c9f0cecb" class="img-fluid">
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
