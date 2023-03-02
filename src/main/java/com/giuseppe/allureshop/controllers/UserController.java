@@ -1,0 +1,60 @@
+package com.giuseppe.allureshop.controllers;
+
+import com.giuseppe.allureshop.models.Role;
+import com.giuseppe.allureshop.models.User;
+import com.giuseppe.allureshop.repositories.CustomerRepository;
+import com.giuseppe.allureshop.repositories.RoleRepository;
+import com.giuseppe.allureshop.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+
+@Controller
+@RequestMapping("/user")
+public class UserController implements ErrorController {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @GetMapping("/user")
+    public String getUser(Model model, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("roles", user.getAuthorities());
+        return "user-view"; // replace with the name of your view file
+    }
+
+    @PostMapping("/register-user")
+    public String registerUser(@ModelAttribute User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "register-user";
+        }
+        Role roleUser = roleRepository.findRoleByName("USER");
+        user.setRoles(Collections.singletonList(roleUser));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.save(user);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/dashboard")
+    public String showUserDashboard(Model model, String username) {
+        User user = userService.getUser(username);
+        model.addAttribute("user", user);
+        return "user-dashboard";
+    }
+
+}
