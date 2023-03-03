@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WeatherResponse {
 
-    private double temp;
-    private int humidity;
+    private String temperature;
+    private String description;
 }
