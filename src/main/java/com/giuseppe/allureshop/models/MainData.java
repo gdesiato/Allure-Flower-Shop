@@ -10,12 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class WeatherResponse {
+public class MainData {
 
-    @JsonProperty("weather")
-    private List<WeatherInfo> weatherInfo;
-
-    @JsonProperty("main")
-    private MainData mainData;
+    private double temp;
+    private double feels_like;
+    private int humidity;
 
 }

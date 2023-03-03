@@ -5,17 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
-public class WeatherResponse {
-
-    @JsonProperty("weather")
-    private List<WeatherInfo> weatherInfo;
+public class WeatherInfo {
 
     @JsonProperty("main")
-    private MainData mainData;
-
+    private String visual;
+    private String description;
 }

@@ -22,7 +22,9 @@
       <td th:text="${flower.name}"></td>
       <td th:text="${flower.price}"></td>
       <td th:text="${flower.customer != null} ? ${flower.customer.fullName}"></td>
-      <!--            <td th:text="${car.customer.fullName}"></td>-->
+      <td>
+        <a th:href="@/user/cart/${flower.id}">Add to Cart</a>
+      </td>
     </tr>
     </tbody>
   </table>

@@ -30,7 +30,7 @@ public class UserController implements ErrorController {
     @Autowired
     RoleRepository roleRepository;
 
-    @GetMapping("/user")
+    @GetMapping
     public String getUser(Model model, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         model.addAttribute("username", user.getUsername());
@@ -54,6 +54,7 @@ public class UserController implements ErrorController {
     public String showUserDashboard(Model model, String username) {
         User user = userService.getUser(username);
         model.addAttribute("user", user);
+        //return "user-dashboard-frag";
         return "user-dashboard";
     }
 

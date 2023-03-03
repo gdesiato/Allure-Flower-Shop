@@ -2,6 +2,7 @@ package com.giuseppe.allureshop.services;
 
 import com.giuseppe.allureshop.exceptions.FlowerNotFoundException;
 import com.giuseppe.allureshop.models.Flower;
+import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.FlowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,4 +55,11 @@ public class FlowerServiceImpl implements FlowerService {
     public Flower saveFlower(Flower flower) {
         return flowerRepository.save(flower);
     }
+
+
+    // method that takes in User as part of parameters
+
+//    public List<Flower> getFlowersForUser(User user){
+//
+//    }
 }

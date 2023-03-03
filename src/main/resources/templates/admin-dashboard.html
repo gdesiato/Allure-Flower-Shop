@@ -37,7 +37,8 @@
     <a sec:authorize="hasRole('ROLE_ADMIN')" class="active-2" href="/admin">Admin</a>
     <a href="/about">About</a>
     <a href="/explore">Explore</a>
-    <a href="/login">Log In / Sign Up</a>
+    <a sec:authorize="!isAuthenticated()" href="/login">Log In / Sign Up</a>
+    <a sec:authorize="isAuthenticated()" href="/logout">Log out</a>
 </nav>
 
 <h1>Admin Dashboard</h1>
