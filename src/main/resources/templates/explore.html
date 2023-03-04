@@ -1,67 +1,71 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <title>About</title>
-    <style>
-		nav {
-			background-color: #333;
-			overflow: hidden;
-		}
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-		nav a {
-			float: left;
-			display: block;
-			color: white;
-			text-align: center;
-			padding: 14px 16px;
-			text-decoration: none;
-		}
+    <head>
+        <meta charset="utf-8"/>
+        <title>About</title>
+        <style>
+            nav {
+                background-color: #000;
+                overflow: hidden;
+            }
 
-		nav a:hover {
-			background-color: #ddd;
-			color: black;
-		}
+            nav a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
 
-		.active {
-			background-color: #4CAF50;
-		}
-        .image-container {
-            margin: 10px;
-        }
-	</style>
-</head>
-<body>
-<nav>
-    <a class="active" href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/explore">Explore</a>
-    <a href="/login">Log In / Sign Up</a>
-</nav>
+            nav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
 
-<div class="container d-flex flex-wrap">
-    <h1>Explore</h1>
-    <div class="image-container">
-        <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3387&q=80" class="img-fluid" height="300px">
-    </div>
-    <div class="image-container">
-        <img src="https://images.unsplash.com/photo-1559847844-5315691f9b3e" class="img-fluid">
-    </div>
-    <div class="image-container">
-        <img src="https://images.unsplash.com/photo-1527004015983-325dfc1b97ae" class="img-fluid">
-    </div>
-    <div class="image-container">
-        <img src="https://images.unsplash.com/photo-1521791543574-79d14a85a080" class="img-fluid">
-    </div>
-    <div class="image-container">
-        <img src="https://images.unsplash.com/photo-1559839844-fd6baaafe6d3" class="img-fluid">
-    </div>
-    <div class="image-container">
-        <img src="https://images.unsplash.com/photo-1579993515282-79b9c9f0cecb" class="img-fluid">
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-</body>
+            .active {
+                background-color: #4CAF50;
+            }
+            .image-container {
+                margin: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div layout:fragment="content" th:remove="tag">
+
+            <div class="container d-flex flex-wrap">
+                <h1>Explore</h1>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3387&q=80" class="img-fluid" height="300px">
+                </div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1559847844-5315691f9b3e" class="img-fluid">
+                </div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1527004015983-325dfc1b97ae" class="img-fluid">
+                </div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1521791543574-79d14a85a080" class="img-fluid">
+                </div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1559839844-fd6baaafe6d3" class="img-fluid">
+                </div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1579993515282-79b9c9f0cecb" class="img-fluid">
+                </div>
+
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+        </div>
+    </body>
 </html>

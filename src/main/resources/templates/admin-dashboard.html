@@ -1,48 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <style>
-		nav {
-			background-color: #333;
-			overflow: hidden;
-		}
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-		nav a {
-			float: left;
-			display: block;
-			color: white;
-			text-align: center;
-			padding: 14px 16px;
-			text-decoration: none;
-		}
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin Dashboard</title>
+        <style>
+            nav {
+                background-color: #000;
+                overflow: hidden;
+            }
 
-		nav a:hover {
-			background-color: #ddd;
-			color: black;
-		}
+            nav a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
 
-		.active-1 {
-			background-color: #4CAF50;
-		}
-		.active-2 {
-              background-color: #1e91d4;
-          }
-	</style>
-</head>
-<body>
-<nav>
-    <a class="active-1" href="/">Home</a>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" class="active-2" href="/admin">Admin</a>
-    <a href="/about">About</a>
-    <a href="/explore">Explore</a>
-    <a sec:authorize="!isAuthenticated()" href="/login">Log In / Sign Up</a>
-    <a sec:authorize="isAuthenticated()" href="/logout">Log out</a>
-</nav>
+            nav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
 
-<h1>Admin Dashboard</h1>
-<p sec:authorize="hasRole('ROLE_ADMIN')">Welcome to your admin dashboard!</p>
-<p sec:authorize="hasRole('ROLE_ADMIN')">Here you can manage the application.</p>
-</body>
+            .active-1 {
+                background-color: #4CAF50;
+            }
+            .active-2 {
+                  background-color: #1e91d4;
+              }
+        </style>
+    </head>
+
+    <body>
+        <div layout:fragment="content" th:remove="tag">
+
+        <h1>Admin Dashboard</h1>
+        <p sec:authorize="hasRole('ROLE_ADMIN')">Welcome to your admin dashboard!</p>
+        <p sec:authorize="hasRole('ROLE_ADMIN')">Here you can manage the application.</p>
+
+        </div>
+    </body>
+
 </html>

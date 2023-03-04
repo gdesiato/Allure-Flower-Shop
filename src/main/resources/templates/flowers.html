@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       layout:decorate="~{fragments/layout}"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-  <meta charset="utf-8"/>
-  <title>Flower Manager</title>
+  <meta charset="UTF-8">
+  <title>Flowers Manager</title>
+  <style>
+                nav {
+                    background-color: #000;
+                    overflow: hidden;
+                }
+
+                nav a {
+                    float: left;
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
+
+                nav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .active-1 {
+                    background-color: #4CAF50;
+                }
+                .active-2 {
+                      background-color: #1e91d4;
+                  }
+            </style>
 </head>
+
 <body>
-<div align="center">
-  <h1>Flower List</h1>
-  <a th:href="@{/new}">Add New Flower</a><br/>
-  <a th:href="@{/}">Customer List</a>
-  <br/><br/>
-  <table border="1" cellpadding="10">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="flower : ${flowerList}">
-      <td th:text="${flower.name}"></td>
-      <td th:text="${flower.price}"></td>
-      <td th:text="${flower.customer != null} ? ${flower.customer.fullName}"></td>
-      <td>
-        <a th:href="@/user/cart/${flower.id}">Add to Cart</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+
+  <div layout:fragment="content" th:remove="tag">
+
+  <div align="center">
+    <h1>Flower List</h1>
+    <a th:href="@{/new}">Add New Flower</a><br/>
+    <a th:href="@{/}">Customer List</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="flower : ${flowerList}">
+        <td th:text="${flower.name}"></td>
+        <td th:text="${flower.price}"></td>
+        <td th:text="${flower.customer != null} ? ${flower.customer.fullName}"></td>
+        <td>
+          <a th:href="@/user/cart/${flower.id}">Add to Cart</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  </div>
+
 </body>
 </html>

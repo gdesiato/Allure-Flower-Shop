@@ -1,45 +1,80 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8"/>
-    <title>Customer Manager</title>
+    <title>Customer List</title>
+    <style>
+            nav {
+                background-color: #000;
+                overflow: hidden;
+            }
+
+            nav a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            nav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .active {
+                background-color: #4CAF50;
+            }
+            .image-container {
+                margin: 10px;
+            }
+        </style>
 </head>
 
 <body>
-<div align="center">
 
-    <h1>Customer List</h1>
-</div>
+    <div layout:fragment="content" th:remove="tag">
 
-<div class="container" align="center">
-    <table class="table table-bordered">
+        <div align="center">
+            <h1>Customer List</h1>
+        </div>
 
-        <thead>
-        <tr>
-            <th>Customer ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Address</th>
+        <div class="container" align="center">
+            <table class="table table-bordered">
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="customer : ${customerList}">
-            <td th:text="${customer.id}">Customer ID</td>
-            <td th:text="${customer.firstName}">First Name</td>
-            <td th:text="${customer.lastName}">Last Name</td>
-            <td th:text="${customer.email}">Email</td>
-            <td th:text="${customer.address}">Address</td>
+                <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
 
-            <td>    <!-- actions -->
-                <a th:href="@{'/update/' + ${customer.id}}">Update</a>
-                <a th:href="@{'/delete/' + ${customer.id}}">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer : ${customerList}">
+                    <td th:text="${customer.id}">Customer ID</td>
+                    <td th:text="${customer.firstName}">First Name</td>
+                    <td th:text="${customer.lastName}">Last Name</td>
+                    <td th:text="${customer.email}">Email</td>
+                    <td th:text="${customer.address}">Address</td>
+
+                    <td>    <!-- actions -->
+                        <a th:href="@{'/update/' + ${customer.id}}">Update</a>
+                        <a th:href="@{'/delete/' + ${customer.id}}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 </body>
 </html>

@@ -54,8 +54,8 @@ public class UserController implements ErrorController {
     public String showUserDashboard(Model model, String username) {
         User user = userService.getUser(username);
         model.addAttribute("user", user);
-        //return "user-dashboard-frag";
-        return "user-dashboard";
+        return "user-dashboard-frag";
+        //return "user-dashboard";
     }
 
 }

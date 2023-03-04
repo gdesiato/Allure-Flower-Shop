@@ -1,38 +1,74 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Customer Details</title>
+    <meta charset="utf-8"/>
+    <title>Customer Id</title>
+    <style>
+            nav {
+                background-color: #000;
+                overflow: hidden;
+            }
+
+            nav a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            nav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .active {
+                background-color: #4CAF50;
+            }
+            .image-container {
+                margin: 10px;
+            }
+        </style>
 </head>
 
 <body>
-<div align="center">
-    <h1>Customer Details</h1>
-</div>
 
-<div class="container" align="center">
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Customer ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Address</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${customer.id}">Customer ID</td>
-            <td th:text="${customer.firstName}">First Name</td>
-            <td th:text="${customer.lastName}">Last Name</td>
-            <td th:text="${customer.email}">Email</td>
-            <td th:text="${customer.address}">Address</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div layout:fragment="content" th:remove="tag">
+
+        <div align="center">
+            <h1>Customer Details</h1>
+        </div>
+
+        <div class="container" align="center">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${customer.id}">Customer ID</td>
+                    <td th:text="${customer.firstName}">First Name</td>
+                    <td th:text="${customer.lastName}">Last Name</td>
+                    <td th:text="${customer.email}">Email</td>
+                    <td th:text="${customer.address}">Address</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 </body>
 
 </html>

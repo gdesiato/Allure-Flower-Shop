@@ -25,7 +25,7 @@ public class AdminController implements ErrorController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping
     public String getUser(Model model, Authentication authentication) {
         User admin = (User) authentication.getPrincipal();
         model.addAttribute("username", admin.getUsername());

@@ -8,7 +8,7 @@
         <div class="container">
 
             <p>
-                &copy; https://platform.codingnomads.co
+                &copy; https://giuseppedesiato.com
                 <span sec:authorize="isAuthenticated()">
                 Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
                 <a th:if="${#httpServletRequest.remoteUser !=null}" th:href="@{/logout}">Sign Out</a>

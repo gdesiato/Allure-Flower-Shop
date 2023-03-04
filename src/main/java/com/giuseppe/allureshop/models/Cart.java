@@ -7,10 +7,10 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import java.util.List;
 
-@Getter
-@Setter
-@Data
-@Entity
+//@Getter
+//@Setter
+//@Data
+//@Entity
 public class Cart {
 
     private User user;
