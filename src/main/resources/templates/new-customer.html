@@ -39,7 +39,9 @@
 <body>
     <div layout:fragment="content" th:remove="tag">
         <h1>New Customer</h1>
+
             <form action="#" th:action="@{/customer/save}" th:object="${customer}" method="post">
+
                 <label for="firstName">First Name:</label>
                 <input type="text" id="firstName" name="firstName" required><br><br>
                 <label for="lastName">Last Name:</label>
