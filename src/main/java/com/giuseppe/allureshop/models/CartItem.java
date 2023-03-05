@@ -3,6 +3,7 @@ package com.giuseppe.allureshop.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class CartItem {
 
     private int quantity;
 
-    public CartItem(Flower flower, int quantity) {
+    public CartItem(Optional<Flower> flower, int quantity) {
     }
 
     public double getTotalPrice() {

@@ -3,8 +3,10 @@ package com.giuseppe.allureshop.controllers;
 import com.giuseppe.allureshop.models.Cart;
 import com.giuseppe.allureshop.models.CartItem;
 import com.giuseppe.allureshop.models.Customer;
+import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.CustomerService;
+import com.giuseppe.allureshop.services.FlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,24 +24,32 @@ public class CartController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private FlowerService flowerService;
+
     @PostMapping("/{customerId}")
-    public String createCart(@PathVariable Long customerId, Model model) {
+    public String addToCart(@PathVariable Long customerId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
         Optional<Customer> customer = customerService.getCustomerById(customerId);
-        if (customer == null) {
+        if (!customer.isPresent()) {
             return "error"; // return error template
         }
-        Cart cart = cartService.createCart(customer);
+        Cart cart = customer.get().getCart();
+        Optional<Flower> flower = flowerService.getFlowerById(flowerId);
+        if (flower == null) {
+            return "error"; // return error template
+        }
+        cartService.addToCart(cart, flower, quantity);
         model.addAttribute("cart", cart);
         return "cart";
     }
 
     @PostMapping("/{cartId}/items")
-    public String addItemToCart(@PathVariable Long cartId, @RequestBody CartItem item, Model model) {
+    public String addItemToCart(@PathVariable Long cartId, @RequestBody CartItem item, @RequestParam Optional<Flower> flower, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
             return "error";
         }
-        CartItem addedItem = cartService.addToCart(cart, item);
+        cartService.addToCart(cart, flower, item.getQuantity());
         model.addAttribute("cart", cart);
         return "cart";
     }

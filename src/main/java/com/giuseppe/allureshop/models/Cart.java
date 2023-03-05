@@ -20,9 +20,8 @@ public class Cart {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items;
 
-    @ManyToOne
+    @OneToOne
     private Customer customer;
-
 
     public void addItem(CartItem item) {
     }

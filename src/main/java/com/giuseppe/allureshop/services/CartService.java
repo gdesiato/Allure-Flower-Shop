@@ -3,10 +3,13 @@ package com.giuseppe.allureshop.services;
 import com.giuseppe.allureshop.exceptions.CartNotFoundException;
 import com.giuseppe.allureshop.models.Cart;
 import com.giuseppe.allureshop.models.CartItem;
+import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -15,10 +18,10 @@ public class CartService {
     CartRepository cartRepository;
 
     // Add flower to the cart
-    public void addToCart(Cart cart, Flower flower, int quantity) {
+    public void addToCart(Cart cartId, Optional<Flower> flower, int quantity) {
         CartItem item = new CartItem(flower, quantity);
-        cart.addItem(item);
-        cartRepository.save(cart);
+        cartId.addItem(item);
+        cartRepository.save(cartId);
     }
 
     // remove product from the cart
@@ -38,4 +41,8 @@ public class CartService {
                 .orElseThrow(() -> new CartNotFoundException("Cart with id " + cartId + " not found"));
     }
 
+    public Cart createCart(Optional<Customer> customer) {
+        Cart cart = new Cart();
+        return cartRepository.save(cart);
+    }
 }

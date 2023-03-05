@@ -25,8 +25,8 @@ public class Customer {
     private String email;
     private String address;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Cart cart;
 
-//    @OneToMany
-//    private FlowerComposition flowerComposition;
 
 }
