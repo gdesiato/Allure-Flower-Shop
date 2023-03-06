@@ -30,6 +30,9 @@ public class CartController {
     public String getCart(@AuthenticationPrincipal User user, Model model) {
         Cart cart = cartService.getShoppingCartForUser(user.getUsername());
         model.addAttribute("cart", cart);
+        if (cart == null) {
+            return "no-cart";
+        }
         return "cart";
     }
 
@@ -51,22 +54,22 @@ public class CartController {
     public String getCartById(@PathVariable Long cartId, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
-            return "error"; // return error template
+            return "error";
         }
-        model.addAttribute("cart", cart); // pass cart object to the template
-        return "cart"; // return cart template
+        model.addAttribute("cart", cart);
+        return "cart";
     }
 
     @PostMapping("/{customerId}")
     public String addToCart(@PathVariable Long customerId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
         Optional<Customer> customer = customerService.getCustomerById(customerId);
         if (!customer.isPresent()) {
-            return "error"; // return error template
+            return "error";
         }
         Cart cart = customer.get().getCart();
         Optional<Flower> flower = flowerService.getFlowerById(flowerId);
         if (flower == null) {
-            return "error"; // return error template
+            return "error";
         }
         cartService.addToCart(cart, flower, quantity);
         model.addAttribute("cart", cart);
@@ -99,10 +102,10 @@ public class CartController {
     public String getTotalPrice(@PathVariable Long cartId, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
-            return "error"; // return error template
+            return "error";
         }
         double totalPrice = cart.getTotalPrice();
-        model.addAttribute("totalPrice", totalPrice); // pass total price to the template
-        return "totalPrice"; // return total price template
+        model.addAttribute("totalPrice", totalPrice);
+        return "totalPrice";
     }
 }
