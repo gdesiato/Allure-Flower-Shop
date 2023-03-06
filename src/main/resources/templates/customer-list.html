@@ -55,6 +55,7 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>Address</th>
+                    <th>Password</th>
 
                 </tr>
                 </thead>
@@ -66,6 +67,7 @@
                     <td th:text="${customer.userName}">Username</td>
                     <td th:text="${customer.email}">Email</td>
                     <td th:text="${customer.address}">Address</td>
+                    <td th:text="${customer.password}">Password</td>
 
                     <td>    <!-- actions -->
                         <a th:href="@{'/update/' + ${customer.id}}">Update</a>

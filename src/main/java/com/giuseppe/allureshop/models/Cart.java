@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 public class Cart {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +22,8 @@ public class Cart {
 
     @OneToOne
     private Customer customer;
+
+    private String username;
 
     public void addItem(CartItem item) {
     }
@@ -40,5 +42,9 @@ public class Cart {
             }
         }
         return totalPrice;
+    }
+
+    public List<CartItem> getCartItems() {
+        return items;
     }
 }

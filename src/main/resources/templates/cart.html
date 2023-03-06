@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Shopping Cart</title>
+    </head>
+
+    <body>
+    <h1>Shopping Cart</h1>
+    <table>
+      <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:if="${cart.items != null}">
+        <th:block th:each="item : ${cart.items}">
+          <tr>
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.product.price}"></td>
+            <td th:text="${item.getTotalPrice()}"></td>
+          </tr>
+        </th:block>
+      </th:block>
+      <th:block th:if="${cart.items == null}">
+        <tr>
+          <td colspan="4">Your cart is empty.</td>
+        </tr>
+      </th:block>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="3">Total:</td>
+        <td th:text="${cart.getTotalPrice()}"></td>
+      </tr>
+      </tfoot>
+    </table>
+    </body>
+</html>

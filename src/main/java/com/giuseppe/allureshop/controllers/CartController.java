@@ -1,13 +1,11 @@
 package com.giuseppe.allureshop.controllers;
 
-import com.giuseppe.allureshop.models.Cart;
-import com.giuseppe.allureshop.models.CartItem;
-import com.giuseppe.allureshop.models.Customer;
-import com.giuseppe.allureshop.models.Flower;
+import com.giuseppe.allureshop.models.*;
 import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.CustomerService;
 import com.giuseppe.allureshop.services.FlowerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +24,38 @@ public class CartController {
 
     @Autowired
     private FlowerService flowerService;
+
+
+    @GetMapping
+    public String getCart(@AuthenticationPrincipal User user, Model model) {
+        Cart cart = cartService.getShoppingCartForUser(user.getUsername());
+        model.addAttribute("cart", cart);
+        return "cart";
+    }
+
+//    @GetMapping("/new/{customerId}")
+//    public String createNewCart(@PathVariable Long customerId, Model model) {
+//        Cart cart = cartService.createCart(customerId);
+//        model.addAttribute("cart", cart);
+//        return "new-cart";
+//    }
+
+    @PostMapping("/new/{customerId}")
+    public String createNewCart(@PathVariable Long customerId, Model model) {
+        Cart cart = cartService.createCart(customerId);
+        model.addAttribute("cart", cart);
+        return "new-cart";
+    }
+
+    @GetMapping("/{cartId}")
+    public String getCartById(@PathVariable Long cartId, Model model) {
+        Cart cart = cartService.getCartById(cartId);
+        if (cart == null) {
+            return "error"; // return error template
+        }
+        model.addAttribute("cart", cart); // pass cart object to the template
+        return "cart"; // return cart template
+    }
 
     @PostMapping("/{customerId}")
     public String addToCart(@PathVariable Long customerId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
@@ -63,16 +93,6 @@ public class CartController {
         cartService.removeItemFromCart(cart, itemId);
         model.addAttribute("cart", cart);
         return "cart";
-    }
-
-    @GetMapping("/{cartId}")
-    public String getCartById(@PathVariable Long cartId, Model model) {
-        Cart cart = cartService.getCartById(cartId);
-        if (cart == null) {
-            return "error"; // return error template
-        }
-        model.addAttribute("cart", cart); // pass cart object to the template
-        return "cart"; // return cart template
     }
 
     @GetMapping("/{cartId}/total")
