@@ -5,39 +5,16 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head>
+
         <meta charset="UTF-8">
         <title>About</title>
-        <style>
-                nav {
-                    background-color: #000;
-                    overflow: hidden;
-                }
+        <link rel="stylesheet" type="text/css" href="style.css">
 
-                nav a {
-                    float: left;
-                    display: block;
-                    color: white;
-                    text-align: center;
-                    padding: 14px 16px;
-                    text-decoration: none;
-                }
-
-                nav a:hover {
-                    background-color: #ddd;
-                    color: black;
-                }
-
-                .active-1 {
-                    background-color: #4CAF50;
-                }
-                .active-2 {
-                      background-color: #1e91d4;
-                  }
-        </style>
     </head>
 <body>
 
 <div align="center">
+
     <div layout:fragment="content" th:remove="tag">
         <h1>About - Flower Shop</h1>
         <p> Welcome to our flower shop! Our mission is to help our customers create a unique and personalized home environment by providing them with a wide selection of high-quality flowers and plants. We believe that surrounding oneself with nature has many benefits, including reducing stress and increasing productivity, and we want to make it easy for our customers to incorporate nature into their daily lives.

@@ -4,47 +4,22 @@
       layout:decorate="~{fragments/layout}"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-  <meta charset="utf-8"/>
-  <title>Error</title>
-  <style>
-            nav {
-                background-color: #000;
-                overflow: hidden;
-            }
+  <head>
+      <meta charset="utf-8"/>
+      <title>Error</title>
+      <link rel="stylesheet" type="text/css" href="style.css">
 
-            nav a {
-                float: left;
-                display: block;
-                color: white;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-            }
-
-            nav a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-
-            .active {
-                background-color: #4CAF50;
-            }
-            .image-container {
-                margin: 10px;
-            }
-        </style>
-</head>
+  </head>
 
   <body>
 
-    <div layout:fragment="content" th:remove="tag">
+      <div layout:fragment="content" th:remove="tag">
 
-      <h1>Error</h1>
-      <p>Oops! Something went wrong.</p>
-      <p>Please select an option from the navigation bar.</p>
+          <h1>Error</h1>
+          <p>Oops! Something went wrong.</p>
+          <p>Please select an option from the navigation bar.</p>
 
-    </div>
+      </div>
 
   </body>
 
