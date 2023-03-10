@@ -24,7 +24,7 @@
                         <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/user}">/User</a>
                         <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/customer/list}">Customer List</a>
                         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Log In</a>
-                        <a sec:authorize="!isAuthenticated()" th:href="@{/customer/new}">Subscribe</a>
+                        <a sec:authorize="!isAuthenticated()" th:href="@{/customer/new}">Register</a>
                         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Log out</a>
                     </nav>
 
