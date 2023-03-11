@@ -29,5 +29,15 @@ public class Customer {
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Cart cart;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private User user;
+
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

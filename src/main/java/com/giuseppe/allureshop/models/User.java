@@ -26,7 +26,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    private String email;
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role_join_table",
@@ -39,6 +41,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -59,4 +62,11 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void setEnabled(boolean b) {
+    }
+
+    public void setCustomer(Customer customer) {
+    }
+
 }

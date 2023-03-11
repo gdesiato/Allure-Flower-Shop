@@ -1,8 +1,10 @@
 package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.Customer;
+import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,9 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/new")
     public String showNewCustomerPage(Model model) {
         Customer customer = new Customer();
@@ -23,13 +28,40 @@ public class CustomerController {
         return "new-customer";
     }
 
-    @PostMapping(value ="/save")
     // As the Model is received back from the view, @ModelAttribute
     // creates a Customer based on the object you collected from
     // the HTML page above
+//    @PostMapping(value ="/save")
+//    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+//        customerService.saveCustomer(customer);
+//        return "registration-confirmation";
+//    }
+
+//    @PostMapping(value = "/save")
+//    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+//        String encodedPassword = passwordEncoder.encode(customer.getPassword());
+//        customer.setPassword(encodedPassword);
+//        customerService.saveCustomer(customer);
+//        return "registration-confirmation";
+//    }
+
+    @PostMapping(value = "/save")
     public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+        // Encode the password before saving the customer
+        String encodedPassword = passwordEncoder.encode(customer.getPassword());
+        customer.setPassword(encodedPassword);
+
+        // Create a User for the customer
+        User user = new User();
+        user.setUsername(customer.getUsername());
+        user.setPassword(encodedPassword);
+        user.setEnabled(true); // enable the user by default
+
+        // Set the User for the customer and save them both
+        customer.setUser(user);
         customerService.saveCustomer(customer);
-        return "redirect:/";
+
+        return "registration-confirmation";
     }
 
     @GetMapping("/list")
@@ -49,7 +81,7 @@ public class CustomerController {
         return "customer-by-id";
     }
 
-    @RequestMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable(name = "id") Long id) {
         customerService.deleteCustomer(id);
         return "redirect:/";

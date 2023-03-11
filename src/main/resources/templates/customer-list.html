@@ -45,8 +45,8 @@
                     <td th:text="${customer.password}">Password</td>
 
                     <td>    <!-- actions -->
-                        <a th:href="@{'/update/' + ${customer.id}}">Update</a>
-                        <a th:href="@{'/delete/' + ${customer.id}}">Delete</a>
+                        <a th:href="@{/update/{id}(id=${customer.id})}">Update</a>
+                        <a th:href="@{/delete/{id}(id=${customer.id})}" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</a>
                     </td>
                 </tr>
                 </tbody>
