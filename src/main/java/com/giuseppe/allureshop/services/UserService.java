@@ -72,7 +72,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void save(User user) {
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 }

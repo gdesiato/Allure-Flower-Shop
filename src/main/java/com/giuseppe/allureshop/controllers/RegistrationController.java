@@ -38,7 +38,7 @@ public class RegistrationController implements ErrorController {
         Role roleUser = roleRepository.findRoleByName("USER");
         user.setRoles(Collections.singletonList(roleUser));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        userService.saveUser(user);
         return "redirect:/login";
     }
 

@@ -15,13 +15,14 @@ import java.util.Collection;
 @Builder
 @Getter
 @Setter
+@Data
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     private String password;
@@ -66,7 +67,7 @@ public class User implements UserDetails {
     public void setEnabled(boolean b) {
     }
 
-    public void setCustomer(Customer customer) {
-    }
+//    public void setCustomer(Customer customer) {
+//    }
 
 }

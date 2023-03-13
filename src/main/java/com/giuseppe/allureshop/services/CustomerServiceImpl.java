@@ -85,4 +85,9 @@ public class CustomerServiceImpl implements CustomerService{
     public List<Customer> saveAllCustomer(List<Customer> customerList) {
         return customerRepository.saveAll(customerList);
     }
+
+    @Override
+    public Optional<Customer> getCustomerByUsername(String username) {
+        return customerRepository.findByUsername(username);
+    }
 }

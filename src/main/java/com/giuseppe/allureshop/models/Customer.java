@@ -13,6 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "customer")
 @Builder
+@Getter
+@Setter
 @Data
 public class Customer {
 
@@ -21,7 +23,7 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
-    private String userName;
+    private String username;
     private String email;
     private String address;
     private String password;
@@ -31,13 +33,5 @@ public class Customer {
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private User user;
-
-    public String getUsername() {
-        return user.getUsername();
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
 }

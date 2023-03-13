@@ -1,8 +1,10 @@
 package com.giuseppe.allureshop.controllers;
 
+import com.giuseppe.allureshop.exceptions.CustomerAlreadyExistsException;
 import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.services.CustomerService;
+import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,8 +50,15 @@ public class CustomerController {
 //        return "registration-confirmation";
 //    }
 
+    // Duplicate error
     @PostMapping(value = "/save")
     public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+
+        // Check if the customer already exists
+        if (customerService.getCustomerByUsername(customer.getUsername()).isPresent()) {
+            throw new CustomerAlreadyExistsException("Customer with username " + customer.getUsername() + " already exists.");
+        }
+
         // Encode the password before saving the customer
         String encodedPassword = passwordEncoder.encode(customer.getPassword());
         customer.setPassword(encodedPassword);
@@ -55,31 +67,47 @@ public class CustomerController {
         User user = new User();
         user.setUsername(customer.getUsername());
         user.setPassword(encodedPassword);
-        user.setEnabled(true); // enable the user by default
+        user.setEnabled(true);
 
-        // Set the User for the customer and save them both
+        // Set the User for the customer
         customer.setUser(user);
+
+        // Save the customer and the user
         customerService.saveCustomer(customer);
+        userService.saveUser(user);
 
         return "registration-confirmation";
     }
 
-    @GetMapping("/list")
-    public String customerList(Model model) {
-        List<Customer> customerList = customerService.getAllCustomers();
-        if (!customerList.isEmpty()) {
-            model.addAttribute("customerList", customerList);
-        }
-        return "customer-list";
-    }
 
-    @GetMapping("/{id}")
-    public String getCustomerById(@PathVariable Long id, Model model) {
-        Customer customer = customerService.getCustomerById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-        model.addAttribute("customer", customer);
-        return "customer-by-id";
-    }
+//    @PostMapping(value = "/save")
+//    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+//
+//        // Check if the customer already exists
+//        if (customerService.getCustomerByUsername(customer.getUsername()).isPresent()) {
+//            throw new CustomerAlreadyExistsException("Customer with username " + customer.getUsername() + " already exists.");
+//        }
+//
+//        // Encode the password before saving the user
+//        String encodedPassword = passwordEncoder.encode(customer.getUser().getPassword());
+//
+//        // Create a User for the customer
+//        User user = new User();
+//        user.setUsername(customer.getUsername());
+//        user.setPassword(encodedPassword);
+//        user.setEnabled(true);
+//
+//        // Set the User for the customer
+//        customer.setUser(user);
+//
+//        // Save the customer and the user
+//        customerService.saveCustomer(customer);
+//        userService.saveUser(user);
+//
+//        return "registration-confirmation";
+//    }
+
+
 
     @DeleteMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable(name = "id") Long id) {
