@@ -42,42 +42,42 @@ public class CustomerController {
 //        return "registration-confirmation";
 //    }
 
-//    @PostMapping(value = "/save")
-//    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
-//        String encodedPassword = passwordEncoder.encode(customer.getPassword());
-//        customer.setPassword(encodedPassword);
-//        customerService.saveCustomer(customer);
-//        return "registration-confirmation";
-//    }
-
-    // Duplicate error
     @PostMapping(value = "/save")
     public String saveCustomer(@ModelAttribute("customer") Customer customer) {
-
-        // Check if the customer already exists
-        if (customerService.getCustomerByUsername(customer.getUsername()).isPresent()) {
-            throw new CustomerAlreadyExistsException("Customer with username " + customer.getUsername() + " already exists.");
-        }
-
-        // Encode the password before saving the customer
         String encodedPassword = passwordEncoder.encode(customer.getPassword());
         customer.setPassword(encodedPassword);
-
-        // Create a User for the customer
-        User user = new User();
-        user.setUsername(customer.getUsername());
-        user.setPassword(encodedPassword);
-        user.setEnabled(true);
-
-        // Set the User for the customer
-        customer.setUser(user);
-
-        // Save the customer and the user
         customerService.saveCustomer(customer);
-        userService.saveUser(user);
-
         return "registration-confirmation";
     }
+
+//    // Duplicate error
+//    @PostMapping(value = "/save")
+//    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+//
+//        // Check if the customer already exists
+//        if (customerService.getCustomerByUsername(customer.getUsername()).isPresent()) {
+//            throw new CustomerAlreadyExistsException("Customer with username " + customer.getUsername() + " already exists.");
+//        }
+//
+//        // Encode the password before saving the customer
+//        String encodedPassword = passwordEncoder.encode(customer.getPassword());
+//        customer.setPassword(encodedPassword);
+//
+//        // Create a User for the customer
+//        User user = new User();
+//        user.setUsername(customer.getUsername());
+//        user.setPassword(encodedPassword);
+//        user.setEnabled(true);
+//
+//        // Set the User for the customer
+//        customer.setUser(user);
+//
+//        // Save the customer and the user
+//        customerService.saveCustomer(customer);
+//        userService.saveUser(user);
+//
+//        return "registration-confirmation";
+//    }
 
 
 //    @PostMapping(value = "/save")
