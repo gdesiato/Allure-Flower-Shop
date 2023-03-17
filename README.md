@@ -12,7 +12,7 @@ Add items to the cart </br>
 Manage the cart and checkout </br>
 
 
-#Technologies Used
+# Technologies Used
 Java 17 </br>
 Spring Boot 2.7.8 </br>
 Spring Security 5.5.1 </br>
@@ -21,8 +21,10 @@ MySQL 8.0.26 </br>
 Maven 3.8.2 </br>
 jQuery 3.6.0
 
-#Contributing
+
+# Contributing
 If you'd like to contribute to Allure, please fork the repository and create a pull request. You can also raise issues if you find any bugs or want to request a new feature.
 
-#License
+
+# License
 Allure is licensed under the MIT License. See LICENSE for more information.

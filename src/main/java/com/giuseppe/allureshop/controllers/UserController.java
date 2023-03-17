@@ -2,12 +2,10 @@ package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.Role;
 import com.giuseppe.allureshop.models.User;
-import com.giuseppe.allureshop.repositories.CustomerRepository;
 import com.giuseppe.allureshop.repositories.RoleRepository;
 import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +27,27 @@ public class UserController implements ErrorController {
 
     @Autowired
     RoleRepository roleRepository;
+
+
+    // imported methods from CustomerController
+
+    @GetMapping("/new")
+    public String showNewUserPage(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "new-user";
+    }
+
+    @PostMapping(value = "/save")
+    public String saveUser(@ModelAttribute("user") User user) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userService.saveUser(user);
+        return "registration-confirmation";
+    }
+
+    //
+
 
     @GetMapping
     public String getUser(Model model, Authentication authentication) {

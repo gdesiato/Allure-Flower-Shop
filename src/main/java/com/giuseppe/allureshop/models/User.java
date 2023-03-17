@@ -21,15 +21,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(nullable = false)
+    private String firstName;
+    private String lastName;
     private String username;
-
+    private String email;
+    private String address;
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Cart cart;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role_join_table",
@@ -64,10 +64,5 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setEnabled(boolean b) {
-    }
-
-//    public void setCustomer(Customer customer) {
-//    }
 
 }

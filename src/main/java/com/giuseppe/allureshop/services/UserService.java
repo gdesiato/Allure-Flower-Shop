@@ -1,5 +1,6 @@
 package com.giuseppe.allureshop.services;
 
+import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.UserRepository;
 import org.hibernate.Hibernate;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,6 +24,24 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     PasswordEncoder encoder;
+
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return Optional.ofNullable(userRepository.findById(id)
+                .orElse(null));
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,25 +64,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public User createNewUser(User user) {
-        user.setId(null);
-//        user.getAuthorities().forEach(a -> a.setId(null));
 
-        //override or set user settings to correct values
-//        user.setAccountNonExpired(true);
-//        userDetails.setAccountNonLocked(true);
-//        userDetails.setCredentialsNonExpired(true);
-//        userDetails.setEnabled(true);
-//        user.setAuthorities(Collections.singletonList(new Role(Role.Roles.ROLE_USER)));
-
-        checkPassword(user.getPassword());
-        user.setPassword(encoder.encode(user.getPassword()));
-        try {
-            return userRepository.save(user);
-        } catch (Exception e) {
-            throw new IllegalStateException(e.getMessage(), e.getCause());
-        }
-    }
 
     private void checkPassword(String password) {
         if (password == null) {
@@ -72,7 +75,4 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
 }

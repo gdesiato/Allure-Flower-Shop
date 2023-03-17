@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Customer Id</title>
+    <title>User Id</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
@@ -16,14 +16,14 @@
     <div layout:fragment="content" th:remove="tag">
 
         <div align="center">
-            <h1>Customer Details</h1>
+            <h1>User Details</h1>
         </div>
 
         <div class="container" align="center">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Customer ID</th>
+                    <th>User ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Username</th>
@@ -34,13 +34,13 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td th:text="${customer.id}">Customer ID</td>
-                    <td th:text="${customer.firstName}">First Name</td>
-                    <td th:text="${customer.lastName}">Last Name</td>
-                    <td th:text="${customer.userName}">Username</td>
-                    <td th:text="${customer.email}">Email</td>
-                    <td th:text="${customer.address}">Address</td>
-                    <td th:text="${customer.password}">Passwor</td>
+                    <td th:text="${user.id}">User ID</td>
+                    <td th:text="${user.firstName}">First Name</td>
+                    <td th:text="${user.lastName}">Last Name</td>
+                    <td th:text="${user.userName}">Username</td>
+                    <td th:text="${user.email}">Email</td>
+                    <td th:text="${user.address}">Address</td>
+                    <td th:text="${user.password}">Password</td>
 
                 </tr>
                 </tbody>

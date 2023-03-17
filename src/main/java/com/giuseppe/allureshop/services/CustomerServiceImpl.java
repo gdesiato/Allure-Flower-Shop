@@ -28,27 +28,27 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.findAll();
     }
 
-//    @Override
-//    public Customer saveCustomer(Customer customer) {
-//        return customerRepository.save(customer);
-//    }
-
     @Override
     public Customer saveCustomer(Customer customer) {
-        // Save the customer
-        customerRepository.save(customer);
-
-        // Create a new User
-        User user = new User();
-        user.setUsername(customer.getUsername());
-        user.setPassword(passwordEncoder.encode(customer.getPassword()));
-        user.setCustomer(customer);
-
-        // Save the User
-        userRepository.save(user);
-
-        return customer;
+        return customerRepository.save(customer);
     }
+
+//    @Override
+//    public Customer saveCustomer(Customer customer) {
+//        // Save the customer
+//        customerRepository.save(customer);
+//
+//        // Create a new User
+//        User user = new User();
+//        user.setUsername(customer.getUsername());
+//        user.setPassword(passwordEncoder.encode(customer.getPassword()));
+//        user.setCustomer(customer);
+//
+//        // Save the User
+//        userRepository.save(user);
+//
+//        return customer;
+//    }
 
     @Override
     public Optional<Customer> getCustomerById(Long id) {
