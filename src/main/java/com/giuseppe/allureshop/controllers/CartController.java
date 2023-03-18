@@ -4,6 +4,7 @@ import com.giuseppe.allureshop.models.*;
 import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.CustomerService;
 import com.giuseppe.allureshop.services.FlowerService;
+import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/cart")
+//@Controller
+//@RequestMapping("/cart")
 public class CartController {
 
     @Autowired
@@ -21,6 +22,9 @@ public class CartController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private FlowerService flowerService;
@@ -35,13 +39,6 @@ public class CartController {
         }
         return "cart";
     }
-
-//    @GetMapping("/new/{customerId}")
-//    public String createNewCart(@PathVariable Long customerId, Model model) {
-//        Cart cart = cartService.createCart(customerId);
-//        model.addAttribute("cart", cart);
-//        return "new-cart";
-//    }
 
     @PostMapping("/new/{customerId}")
     public String createNewCart(@PathVariable Long customerId, Model model) {
@@ -60,13 +57,15 @@ public class CartController {
         return "cart";
     }
 
-    @PostMapping("/{customerId}")
-    public String addToCart(@PathVariable Long customerId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
-        Optional<Customer> customer = customerService.getCustomerById(customerId);
-        if (!customer.isPresent()) {
+    // change for user
+
+    @PostMapping("/{userId}")
+    public String addToCart(@PathVariable Long userId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
+        Optional<User> user = userService.getUserById(userId);
+        if (!user.isPresent()) {
             return "error";
         }
-        Cart cart = customer.get().getCart();
+        Cart cart = user.get().getCart();
         Optional<Flower> flower = flowerService.getFlowerById(flowerId);
         if (flower == null) {
             return "error";

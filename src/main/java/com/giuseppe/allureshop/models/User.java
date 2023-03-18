@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String address;
     private String password;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
     @ManyToMany(fetch = FetchType.EAGER)

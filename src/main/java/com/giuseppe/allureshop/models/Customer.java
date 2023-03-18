@@ -28,10 +28,10 @@ public class Customer {
     private String address;
     private String password;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Cart cart;
-
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    private User user;
+//    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private Cart cart;
+//
+//    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private User user;
 
 }
