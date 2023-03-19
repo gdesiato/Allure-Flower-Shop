@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -44,6 +45,19 @@ public class UserController implements ErrorController {
         user.setPassword(encodedPassword);
         userService.saveUser(user);
         return "registration-confirmation";
+    }
+
+    @GetMapping("/list")
+    public String getUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "user-list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return "redirect:/user/list";
     }
 
     //

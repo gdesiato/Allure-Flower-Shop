@@ -34,13 +34,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
     public Optional<User> getUserById(Long id) {
         return Optional.ofNullable(userRepository.findById(id)
                 .orElse(null));
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
     }
 
 

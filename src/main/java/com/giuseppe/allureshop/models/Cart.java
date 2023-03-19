@@ -21,7 +21,7 @@ public class Cart {
     private List<CartItem> items;
 
     @OneToOne
-    private Customer customer;
+    private User user;
 
     private String username;
 
