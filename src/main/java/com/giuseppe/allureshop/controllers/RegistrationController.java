@@ -30,6 +30,21 @@ public class RegistrationController implements ErrorController {
     RoleRepository roleRepository;
 
 
+    @GetMapping("/new")
+    public String showNewUserPage(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "new-user";
+    }
+
+    @PostMapping(value = "/save")
+    public String saveUser(@ModelAttribute("user") User user) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userService.saveUser(user);
+        return "registration-confirmation";
+    }
+
     @PostMapping("/register-user")
     public String registerUser(@ModelAttribute User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

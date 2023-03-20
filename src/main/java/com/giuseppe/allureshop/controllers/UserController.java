@@ -30,23 +30,6 @@ public class UserController implements ErrorController {
     RoleRepository roleRepository;
 
 
-    // imported methods from CustomerController
-
-    @GetMapping("/new")
-    public String showNewUserPage(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "new-user";
-    }
-
-    @PostMapping(value = "/save")
-    public String saveUser(@ModelAttribute("user") User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userService.saveUser(user);
-        return "registration-confirmation";
-    }
-
     @GetMapping("/list")
     public String getUsers(Model model) {
         List<User> users = userService.getAllUsers();
@@ -60,27 +43,12 @@ public class UserController implements ErrorController {
         return "redirect:/user/list";
     }
 
-    //
-
-
     @GetMapping
     public String getUser(Model model, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         model.addAttribute("username", user.getUsername());
         model.addAttribute("roles", user.getAuthorities());
         return "user-view"; // replace with the name of your view file
-    }
-
-    @PostMapping("/register-user")
-    public String registerUser(@ModelAttribute User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "register-user";
-        }
-        Role roleUser = roleRepository.findRoleByName("USER");
-        user.setRoles(Collections.singletonList(roleUser));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.saveUser(user);
-        return "redirect:/login";
     }
 
     @GetMapping("/dashboard")

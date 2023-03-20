@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,7 +38,9 @@ public class AdminController implements ErrorController {
     public String showAdminDashboard(Model model, String username) {
         User user = userService.getUser(username);
         model.addAttribute("user", user);
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+
         return "admin-dashboard";
-        //return "admin-dashboard";
     }
 }
