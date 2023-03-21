@@ -3,6 +3,7 @@ package com.giuseppe.allureshop.controllers;
 import com.giuseppe.allureshop.models.Role;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.RoleRepository;
+import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -22,6 +23,9 @@ public class RegistrationController implements ErrorController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CartService cartService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -45,17 +49,14 @@ public class RegistrationController implements ErrorController {
         return "registration-confirmation";
     }
 
-    @PostMapping("/register-user")
-    public String registerUser(@ModelAttribute User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "register-user";
-        }
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute User user) {
         Role roleUser = roleRepository.findRoleByName("USER");
         user.setRoles(Collections.singletonList(roleUser));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.saveUser(user);
-        return "redirect:/login";
+        User savedUser = userService.saveUser(user);
+        cartService.createCartForUser(savedUser);
+        return "registration-confirmation";
+        //return "redirect:/login";
     }
-
-
 }

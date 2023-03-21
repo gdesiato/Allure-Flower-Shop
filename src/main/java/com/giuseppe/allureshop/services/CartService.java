@@ -4,6 +4,7 @@ import com.giuseppe.allureshop.exceptions.CartNotFoundException;
 import com.giuseppe.allureshop.models.Cart;
 import com.giuseppe.allureshop.models.CartItem;
 import com.giuseppe.allureshop.models.Flower;
+import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,13 @@ public class CartService {
 
     @Autowired
     CartRepository cartRepository;
+
+    public Cart createCartForUser(User user) {
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cart.setUsername(user.getUsername());
+        return cartRepository.save(cart);
+    }
 
     public Cart getShoppingCartForUser(String username) {
         return cartRepository.findByUsername(username);

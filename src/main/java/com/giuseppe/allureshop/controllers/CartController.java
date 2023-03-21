@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-//@Controller
-//@RequestMapping("/cart")
+@Controller
+@RequestMapping("/cart")
 public class CartController {
 
     @Autowired
