@@ -8,6 +8,7 @@ import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class CartController {
 
 
     @GetMapping
+    @Transactional
     public String getCart(@AuthenticationPrincipal User user, Model model) {
         Cart cart = cartService.getShoppingCartForUser(user.getUsername());
         model.addAttribute("cart", cart);
@@ -41,6 +43,7 @@ public class CartController {
     }
 
     @PostMapping("/new/{customerId}")
+    @Transactional
     public String createNewCart(@PathVariable Long customerId, Model model) {
         Cart cart = cartService.createCart(customerId);
         model.addAttribute("cart", cart);
@@ -48,6 +51,7 @@ public class CartController {
     }
 
     @GetMapping("/{cartId}")
+    @Transactional
     public String getCartById(@PathVariable Long cartId, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
@@ -60,6 +64,7 @@ public class CartController {
     // change for user
 
     @PostMapping("/{userId}")
+    @Transactional
     public String addToCart(@PathVariable Long userId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
         Optional<User> user = userService.getUserById(userId);
         if (!user.isPresent()) {
@@ -76,6 +81,7 @@ public class CartController {
     }
 
     @PostMapping("/{cartId}/items")
+    @Transactional
     public String addItemToCart(@PathVariable Long cartId, @RequestBody CartItem item, @RequestParam Optional<Flower> flower, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
@@ -87,6 +93,7 @@ public class CartController {
     }
 
     @DeleteMapping("/{cartId}/items/{itemId}")
+    @Transactional
     public String removeItemFromCart(@PathVariable Long cartId, @PathVariable CartItem itemId, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
@@ -98,6 +105,7 @@ public class CartController {
     }
 
     @GetMapping("/{cartId}/total")
+    @Transactional
     public String getTotalPrice(@PathVariable Long cartId, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {

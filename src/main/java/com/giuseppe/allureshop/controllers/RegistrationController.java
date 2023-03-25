@@ -49,14 +49,29 @@ public class RegistrationController implements ErrorController {
         return "registration-confirmation";
     }
 
+
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
-        Role roleUser = roleRepository.findRoleByName("USER");
-        user.setRoles(Collections.singletonList(roleUser));
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
+        User existingUser = userService.findByUsername(user.getUsername());
+        if (existingUser != null) {
+            model.addAttribute("registrationError", "Username already exists.");
+            return "registration"; // Replace with your registration view name
+        }
+        Role userRole = roleRepository.findRoleByName("USER");
+        if (userRole == null) {
+            userRole = new Role();
+            userRole.setName("USER");
+            roleRepository.save(userRole);
+        }
+        user.setRoles(Collections.singleton(userRole));
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User savedUser = userService.saveUser(user);
-        cartService.createCartForUser(savedUser);
-        return "registration-confirmation";
-        //return "redirect:/login";
+
+        userService.saveUser(user);
+
+        //The creation of a new cart causes an error
+        //cartService.createCartForUser(user);
+
+        return "user-dashboard-frag";
     }
 }

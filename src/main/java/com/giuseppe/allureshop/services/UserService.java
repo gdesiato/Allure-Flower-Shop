@@ -4,6 +4,7 @@ import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.UserRepository;
 import org.hibernate.Hibernate;
+import org.hibernate.dialect.function.AbstractAnsiTrimEmulationFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,28 +27,38 @@ public class UserService implements UserDetailsService {
     PasswordEncoder encoder;
 
 
+    @Transactional
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
     public User saveUser(User user) {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    @Transactional
     public Optional<User> getUserById(Long id) {
         return Optional.ofNullable(userRepository.findById(id)
                 .orElse(null));
     }
 
-
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User optionalUser = userRepository.findByUsername(username);
         if (optionalUser == null) {
