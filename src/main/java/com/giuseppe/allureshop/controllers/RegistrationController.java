@@ -1,5 +1,6 @@
 package com.giuseppe.allureshop.controllers;
 
+import com.giuseppe.allureshop.models.Cart;
 import com.giuseppe.allureshop.models.Role;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.RoleRepository;
@@ -70,7 +71,9 @@ public class RegistrationController implements ErrorController {
         userService.saveUser(user);
 
         //The creation of a new cart causes an error
-        //cartService.createCartForUser(user);
+//        Cart userCart = cartService.findCartByUser(user);
+//        model.addAttribute("cart", userCart);
+//        model.addAttribute("items", userCart.getItems());
 
         return "user-dashboard-frag";
     }

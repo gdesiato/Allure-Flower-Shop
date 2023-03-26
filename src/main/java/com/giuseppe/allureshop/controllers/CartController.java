@@ -2,7 +2,6 @@ package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.*;
 import com.giuseppe.allureshop.services.CartService;
-import com.giuseppe.allureshop.services.CustomerService;
 import com.giuseppe.allureshop.services.FlowerService;
 import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
-
-    @Autowired
-    private CustomerService customerService;
 
     @Autowired
     private UserService userService;

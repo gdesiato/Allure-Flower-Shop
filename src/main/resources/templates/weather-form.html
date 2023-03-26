@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Weather Form</title>
+</head>
+<body>
+<h1>Enter a City and a Country</h1>
+<form th:action="@{/weather}" method="post">
+    <label for="city">City:</label>
+    <input type="text" id="city" name="cityName" th:value="${city}"><br><br>
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="countryName" th:value="${country}"><br><br>
+    <button type="submit">Get Weather</button>
+</form>
+</body>
+</html>

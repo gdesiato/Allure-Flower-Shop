@@ -1,10 +1,8 @@
 package com.giuseppe.allureshop.services;
 
-import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.UserRepository;
 import org.hibernate.Hibernate;
-import org.hibernate.dialect.function.AbstractAnsiTrimEmulationFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -78,7 +76,6 @@ public class UserService implements UserDetailsService {
     public User getUser(String username) throws EntityNotFoundException  {
         return userRepository.findByUsername(username);
     }
-
 
 
     private void checkPassword(String password) {

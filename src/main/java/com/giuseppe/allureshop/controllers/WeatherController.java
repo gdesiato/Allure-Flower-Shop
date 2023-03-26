@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WeatherController {
@@ -15,9 +17,27 @@ public class WeatherController {
     WeatherService weatherService;
 
     @GetMapping("/weather/{city}")
-    public String getWeather(@PathVariable String city, Model model) {
+    public String getWeatherDirectly(@PathVariable String city, Model model) {
         WeatherResponse weather = weatherService.getWeather(city);
         model.addAttribute("weather", weather);
-        return "weather"; // return the name of the Thymeleaf template to be rendered
+        return "weather";
+    }
+
+    @GetMapping("/weather")
+    public String showWeatherForm(Model model) {
+        model.addAttribute("city", "");
+        model.addAttribute("country", "");
+        return "weather-form";
+    }
+
+    @PostMapping("/weather")
+    public String getWeather(@RequestParam("cityName") String city,
+                             @RequestParam("countryName") String country,
+                             Model model) {
+        WeatherResponse weather = weatherService.getWeather(city + "," + country);
+        model.addAttribute("weather", weather);
+        model.addAttribute("city", city);
+        model.addAttribute("country", country);
+        return "weather";
     }
 }

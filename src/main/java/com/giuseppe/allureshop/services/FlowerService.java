@@ -1,6 +1,5 @@
 package com.giuseppe.allureshop.services;
 
-import com.giuseppe.allureshop.models.Customer;
 import com.giuseppe.allureshop.models.Flower;
 
 import java.util.List;

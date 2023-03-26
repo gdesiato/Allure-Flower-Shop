@@ -6,14 +6,31 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-
 </head>
 <body>
-    <div layout:fragment="content" th:remove="tag">
+<div layout:fragment="content" th:remove="tag">
 
     <h1>User Dashboard</h1>
-    <p>Welcome to your user dashboard!</p>.
+    <p>Welcome to your user dashboard, <span th:text="${user.username}">username</span>!</p>
     <p>Here you can view your customer information.</p>
-    </div>
+
+    <h2>Your Cart</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Flower</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.flower.name}">Flower Name</td>
+            <td th:text="${item.flower.price}">Flower Price</td>
+            <td th:text="${item.quantity}">Flower Quantity</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

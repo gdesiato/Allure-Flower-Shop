@@ -1,6 +1,5 @@
 package com.giuseppe.allureshop.controllers;
 
-import com.giuseppe.allureshop.models.Role;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.RoleRepository;
 import com.giuseppe.allureshop.services.UserService;
@@ -10,10 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -48,7 +45,7 @@ public class UserController implements ErrorController {
         User user = (User) authentication.getPrincipal();
         model.addAttribute("username", user.getUsername());
         model.addAttribute("roles", user.getAuthorities());
-        return "user-view"; // replace with the name of your view file
+        return "user-view";
     }
 
     @GetMapping("/dashboard")
