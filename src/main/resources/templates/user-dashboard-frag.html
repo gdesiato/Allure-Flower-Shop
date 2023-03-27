@@ -11,7 +11,7 @@
 <div layout:fragment="content" th:remove="tag">
 
     <h1>User Dashboard</h1>
-    <p>Welcome to your user dashboard, <span th:text="${user.username}">username</span>!</p>
+    <p>Welcome to your user dashboard, <strong><span th:text="${user.username}">username</span></strong>!</p>
     <p>Here you can view your customer information.</p>
 
     <h2>Your Cart</h2>
@@ -29,8 +29,12 @@
             <td th:text="${item.flower.price}">Flower Price</td>
             <td th:text="${item.quantity}">Flower Quantity</td>
         </tr>
+        <tr th:if="${items.isEmpty()}">
+            <td colspan="3">Your cart is empty.</td>
+        </tr>
         </tbody>
     </table>
+    <p>Total Price: <span th:text="${cart.getTotalPrice()}">0.0</span></p>
 </div>
 </body>
 </html>

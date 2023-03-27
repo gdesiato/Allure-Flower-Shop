@@ -70,10 +70,14 @@ public class RegistrationController implements ErrorController {
 
         userService.saveUser(user);
 
-        //The creation of a new cart causes an error
-//        Cart userCart = cartService.findCartByUser(user);
-//        model.addAttribute("cart", userCart);
-//        model.addAttribute("items", userCart.getItems());
+        //The creation of a new cart causes an error at the moment of login
+        Cart userCart = new Cart();
+        userCart.setUser(user);
+        userCart.setUsername(user.getUsername());
+        cartService.saveCart(userCart);
+
+        model.addAttribute("cart", userCart);
+        model.addAttribute("items", userCart.getItems());
 
         return "user-dashboard-frag";
     }

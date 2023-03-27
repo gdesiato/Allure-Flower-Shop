@@ -68,4 +68,8 @@ public class CartService {
     public Cart findCartByUser(User user) {
         return cartRepository.findByUser(user);
     }
+
+    public Cart saveCart(Cart cart) {
+        return cartRepository.save(cart);
+    }
 }

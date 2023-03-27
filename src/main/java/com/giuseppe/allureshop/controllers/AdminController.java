@@ -31,7 +31,7 @@ public class AdminController implements ErrorController {
         User admin = (User) authentication.getPrincipal();
         model.addAttribute("username", admin.getUsername());
         model.addAttribute("roles", admin.getAuthorities());
-        return "admin-view"; // replace with the name of your view file
+        return "admin-view";
     }
 
     @GetMapping("/dashboard")
