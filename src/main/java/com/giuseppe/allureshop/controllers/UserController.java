@@ -79,6 +79,31 @@ public class UserController implements ErrorController {
 //        return "user-dashboard-frag";
 //    }
 
+//    @GetMapping("/dashboard")
+//    public String showUserDashboard(Principal principal, Model model) {
+//        if (principal != null) {
+//            String username = principal.getName();
+//            User user = userService.findByUsername(username);
+//
+//            if (user != null) {
+//                model.addAttribute("user", user);
+//                Cart userCart = cartService.findCartByUser(user);
+//
+//                if (userCart == null) {
+//                    userCart = new Cart();
+//                    userCart.setUser(user);
+//                    userCart.setUsername(user.getUsername());
+//                    cartService.saveCart(userCart);
+//                }
+//
+//                model.addAttribute("cart", userCart);
+//                model.addAttribute("items", userCart.getItems());
+//            }
+//        }
+//
+//        return "user-dashboard-frag";
+//    }
+
     @GetMapping("/dashboard")
     public String showUserDashboard(Principal principal, Model model) {
         if (principal != null) {
@@ -87,17 +112,27 @@ public class UserController implements ErrorController {
 
             if (user != null) {
                 model.addAttribute("user", user);
-                Cart userCart = cartService.findCartByUser(user);
 
-                if (userCart == null) {
-                    userCart = new Cart();
-                    userCart.setUser(user);
-                    userCart.setUsername(user.getUsername());
-                    cartService.saveCart(userCart);
+                // Check if the user has an admin role
+                boolean isAdmin = user.getRoles().stream().anyMatch(role -> role.getName().equalsIgnoreCase("ADMIN"));
+
+                if (isAdmin) {
+                    // Redirect to the admin dashboard if the user is an admin
+                    return "redirect:/admin/dashboard";
+                } else {
+                    // Handle the user dashboard
+                    Cart userCart = cartService.findCartByUser(user);
+
+                    if (userCart == null) {
+                        userCart = new Cart();
+                        userCart.setUser(user);
+                        userCart.setUsername(user.getUsername());
+                        cartService.saveCart(userCart);
+                    }
+
+                    model.addAttribute("cart", userCart);
+                    model.addAttribute("items", userCart.getItems());
                 }
-
-                model.addAttribute("cart", userCart);
-                model.addAttribute("items", userCart.getItems());
             }
         }
 
