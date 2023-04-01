@@ -16,4 +16,12 @@ public class MainData {
     private double feels_like;
     private int humidity;
 
+    public void setTemp(double temp) {
+        this.temp = TemperatureUtil.kelvinToCelsius(temp);
+    }
+
+    public void setFeels_like(double feels_like) {
+        this.feels_like = TemperatureUtil.kelvinToCelsius(feels_like);
+    }
+
 }

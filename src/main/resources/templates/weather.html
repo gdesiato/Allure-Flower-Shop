@@ -30,8 +30,8 @@
     </thead>
     <tbody>
     <tr>
-      <td th:text="${weather.mainData.temp}"></td>
-      <td th:text="${weather.mainData.feels_like}"></td>
+      <td th:text="${#numbers.formatDecimal(weather.mainData.temp, 1, 2)}"></td>
+      <td th:text="${#numbers.formatDecimal(weather.mainData.feels_like, 1, 2)}"></td>
       <td th:text="${weather.mainData.humidity}"></td>
     </tr>
     </tbody>
