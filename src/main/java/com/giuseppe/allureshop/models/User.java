@@ -15,7 +15,6 @@ import java.util.Collection;
 @Builder
 @Getter
 @Setter
-@Data
 public class User implements UserDetails {
 
     @Id

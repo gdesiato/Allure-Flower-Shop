@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "flowerComposition")
 @Builder
-@Data
 public class FlowerComposition {
 
     @Id

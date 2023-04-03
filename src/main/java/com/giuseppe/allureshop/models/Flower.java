@@ -9,7 +9,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "flower")
 @Builder
-@Data
 public class Flower {
 
     @Id
