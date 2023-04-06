@@ -1,6 +1,7 @@
 package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.Cart;
+import com.giuseppe.allureshop.models.CartItem;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.RoleRepository;
 import com.giuseppe.allureshop.services.CartService;
@@ -126,12 +127,14 @@ public class UserController implements ErrorController {
                     if (userCart == null) {
                         userCart = new Cart();
                         userCart.setUser(user);
-                        userCart.setUsername(user.getUsername());
-                        cartService.saveCart(userCart);
+                        //userCart.setUsername(user.getUsername());
+                        userCart = cartService.saveCart(userCart);
                     }
 
+                    List<CartItem> items = userCart.getItems();
+
                     model.addAttribute("cart", userCart);
-                    model.addAttribute("items", userCart.getItems());
+                    model.addAttribute("items", items);
                 }
             }
         }

@@ -9,6 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "flower")
 @Builder
+@Getter
+@Setter
 public class Flower {
 
     @Id
@@ -20,6 +22,5 @@ public class Flower {
 
     @Column(name = "price")
     private double price;
-
 
 }
