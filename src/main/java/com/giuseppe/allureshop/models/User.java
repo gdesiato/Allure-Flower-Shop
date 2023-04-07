@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -30,6 +31,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CartItem> cartItems;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role_join_table",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -42,6 +46,12 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public List<CartItem> getCartItems() {
+        if (cart != null) {
+            return cart.getItems();
+        }
+        return new ArrayList<>();
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -62,6 +72,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }

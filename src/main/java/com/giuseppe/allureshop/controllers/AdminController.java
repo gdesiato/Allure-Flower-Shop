@@ -1,23 +1,18 @@
 package com.giuseppe.allureshop.controllers;
 
-import com.giuseppe.allureshop.models.Role;
+import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.models.User;
-import com.giuseppe.allureshop.repositories.RoleRepository;
+import com.giuseppe.allureshop.services.FlowerServiceImpl;
 import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,6 +20,10 @@ public class AdminController implements ErrorController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private FlowerServiceImpl flowerService;
+
 
     @GetMapping
     public String getUser(Model model, Authentication authentication) {
@@ -43,4 +42,32 @@ public class AdminController implements ErrorController {
 
         return "admin-dashboard";
     }
+
+
+    @GetMapping("flowers/list")
+    public String flowerHomePage(Model model) {
+        final List<Flower> flowerList = flowerService.getAllFlowers();
+        model.addAttribute("flowerList", flowerList);
+        return "flowers";
+    }
+
+    @GetMapping("flowers/new")
+    public String newFlower(Model model) {
+        Flower flower = new Flower();
+        model.addAttribute("flower", flower);
+        return "new-flower";
+    }
+
+    @PostMapping("flowers/new")
+    public String addNewFlower(@ModelAttribute Flower flower) {
+        flowerService.saveFlower(flower);
+        return "redirect:/admin/flowers/list";
+    }
+
+    @RequestMapping("flowers/delete/{id}")
+    public String deleteFlower(@PathVariable(name = "id") Long id) {
+        flowerService.deleteFlower(id);
+        return "redirect:/";
+    }
+
 }

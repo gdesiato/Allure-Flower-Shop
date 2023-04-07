@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       xmlns:th="http://www.thymeleaf.org"
-       layout:decorate="~{fragments/layout}"
-       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Flowers Manager</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <title>Flowers Manager</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 
 <body>
 
-  <div layout:fragment="content" th:remove="tag">
+<div layout:fragment="content" th:remove="tag">
 
   <div align="center">
     <h1>Flower List</h1>
-    <a th:href="@{/new}">Add New Flower</a><br/>
-    <a th:href="@{/}">Customer List</a>
+    <a th:href="@{/admin/flowers/new}">Add New Flower</a><br/>
     <br/><br/>
     <table border="1" cellpadding="10">
       <thead>
       <tr>
         <th>Name</th>
         <th>Price</th>
+        <th>Action</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="flower : ${flowerList}">
         <td th:text="${flower.name}"></td>
         <td th:text="${flower.price}"></td>
-        <td th:text="${flower.customer != null} ? ${flower.customer.fullName}"></td>
         <td>
-          <a th:href="@/user/cart/${flower.id}">Add to Cart</a>
+          <a th:href="@{/admin/flowers/delete/{id}(id=${flower.id})}">Delete Flower</a>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  </div>
+</div>
 
 </body>
 </html>

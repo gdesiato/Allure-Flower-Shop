@@ -19,72 +19,96 @@
 
         <div class="card-group" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 
-            <div style="flex-basis: 19%; margin-bottom: 2%;">
-                <div class="card" style="width: 100%;">
+            <div style="flex-basis: 19%; margin-bottom: 2%;" th:id="'flower-1'">
+            <div class="card" style="width: 100%;">
                     <img src="https://images.unsplash.com/photo-1468327768560-75b778cbb551?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80" class="card-img-top" alt="plant" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Tulip</h5>
                         <p class="card-text">Often associated with springtime, tulips are vibrant flowers that come in a wide range of colors. Their cup-shaped blooms and sturdy stems make them a favorite choice for gardens and floral arrangements.</p>
                     </div>
                     <div class="card-body">
-                        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Add To Cart</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Add To Cart</a>
+                        <form method="post" th:action="@{/cart/{userId}(userId=${#authentication.principal.id})}">
+                            <input type="hidden" name="flowerId" th:value="'1'" />
+                            <input type="number" name="quantity" min="1" max="10" value="1" />
+                            <button type="submit">Add To Cart</button>
+                        </form>
+                        <a sec:authorize="isAuthenticated()" th:href="@{'/cart/' + ${#authentication.principal.id}}">View Cart</a>
                     </div>
                 </div>
             </div>
 
-            <div style="flex-basis: 19%; margin-bottom: 2%;">
-                <div class="card" style="width: 100%;">
+            <div style="flex-basis: 19%; margin-bottom: 2%;" th:id="'flower-2'">
+
+            <div class="card" style="width: 100%;">
                     <img src="https://images.unsplash.com/photo-1594417414388-79be5df72aad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3024&q=80" class="card-img-top" alt="plant" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Daisy</h5>
                         <p class="card-text">Known for their simple, yet charming appearance, daisies symbolize innocence and purity. With their white petals surrounding a bright yellow center, they bring a touch of cheerfulness to any setting.</p>
                     </div>
                     <div class="card-body">
-                        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Add To Cart</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Add To Cart</a>
+                        <form method="post" th:action="@{/cart/{userId}(userId=${#authentication.principal.id})}">
+                            <input type="hidden" name="flowerId" th:value="'2'" />
+                            <input type="number" name="quantity" min="1" max="10" value="1" />
+                            <button type="submit">Add To Cart</button>
+                        </form>
+                        <a sec:authorize="isAuthenticated()" th:href="@{'/cart/' + ${#authentication.principal.id}}">View Cart</a>
                     </div>
                 </div>
             </div>
 
-            <div style="flex-basis: 19%; margin-bottom: 2%;">
-                <div class="card" style="width: 100%;">
+            <div style="flex-basis: 19%; margin-bottom: 2%;" th:id="'flower-3'">
+
+            <div class="card" style="width: 100%;">
                     <img src="https://images.unsplash.com/photo-1583846712268-a77d97b7fd68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3096&q=80" class="card-img-top" alt="plant" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Orchid</h5>
                         <p class="card-text">Exotic and elegant, orchids are known for their unique, intricate shapes and vibrant colors. They represent luxury and refinement, making them an exquisite choice for special occasions and home decor.</p>
                     </div>
                     <div class="card-body">
-                        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Add To Cart</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Add To Cart</a>
+                        <form method="post" th:action="@{/cart/{userId}(userId=${#authentication.principal.id})}">
+                            <input type="hidden" name="flowerId" th:value="'3'" />
+                            <input type="number" name="quantity" min="1" max="10" value="1" />
+                            <button type="submit">Add To Cart</button>
+                        </form>
+                        <a sec:authorize="isAuthenticated()" th:href="@{'/cart/' + ${#authentication.principal.id}}">View Cart</a>
                     </div>
                 </div>
             </div>
 
-            <div style="flex-basis: 19%; margin-bottom: 2%;">
-                <div class="card" style="width: 100%;">
+            <div style="flex-basis: 19%; margin-bottom: 2%;" th:id="'flower-4'">
+
+            <div class="card" style="width: 100%;">
                     <img src="https://images.unsplash.com/photo-1558620703-705898eec24f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3384&q=80" class="card-img-top" alt="plant" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Rose</h5>
                         <p class="card-text">The classic symbol of love and romance, roses come in various colors, each with their own meaning. With their velvety petals and alluring fragrance, they make a perfect gift for any occasion.</p>
                     </div>
                     <div class="card-body">
-                        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Add To Cart</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Add To Cart</a>
+                        <form method="post" th:action="@{/cart/{userId}(userId=${#authentication.principal.id})}">
+                            <input type="hidden" name="flowerId" th:value="'4'" />
+                            <input type="number" name="quantity" min="1" max="10" value="1" />
+                            <button type="submit">Add To Cart</button>
+                        </form>
+                        <a sec:authorize="isAuthenticated()" th:href="@{'/cart/' + ${#authentication.principal.id}}">View Cart</a>
                     </div>
                 </div>
             </div>
 
-            <div style="flex-basis: 19%; margin-bottom: 2%;">
-                <div class="card" style="width: 100%;">
+            <div style="flex-basis: 19%; margin-bottom: 2%;" th:id="'flower-5'">
+
+            <div class="card" style="width: 100%;">
                     <img src="https://images.unsplash.com/photo-1564188595308-fd30421cdb57?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3055&q=80" class="card-img-top" alt="plant" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Sunflower</h5>
                         <p class="card-text">These large, bright yellow flowers are synonymous with warmth, happiness, and positivity. With their tall stems and striking appearance, sunflowers make a bold statement in gardens and bouquets..</p>
                     </div>
                     <div class="card-body">
-                        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Add To Cart</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Add To Cart</a>
+                        <form method="post" th:action="@{/cart/{userId}(userId=${#authentication.principal.id})}">
+                            <input type="hidden" name="flowerId" th:value="'5'" />
+                            <input type="number" name="quantity" min="1" max="10" value="1" />
+                            <button type="submit">Add To Cart</button>
+                        </form>
+                        <a sec:authorize="isAuthenticated()" th:href="@{'/cart/' + ${#authentication.principal.id}}">View Cart</a>
                     </div>
                 </div>
             </div>

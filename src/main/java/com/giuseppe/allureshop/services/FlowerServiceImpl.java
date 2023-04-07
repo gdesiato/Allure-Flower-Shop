@@ -20,27 +20,23 @@ public class FlowerServiceImpl implements FlowerService {
 
 
     @Override
-    @Cacheable(value = "flowers", key = "'all'")
     public List<Flower> getAllFlowers() {
         return flowerRepository.findAll();
     }
 
 
     @Override
-    @Cacheable(value = "flowers", key = "#id")
     public Optional<Flower> getFlowerById(Long id) {
         return Optional.ofNullable(flowerRepository.findById(id)
                 .orElse(null));
     }
 
     @Override
-    @CacheEvict(value = "flowers", allEntries = true)
     public void deleteFlower(Long id) {
         flowerRepository.deleteById(id);
     }
 
     @Override
-    @CachePut(value = "flowers", key = "#id")
     public Flower updateFlower(Long id, Flower flower) {
         Optional<Flower> optionalFlower = flowerRepository.findById(id);
         if (optionalFlower.isPresent()) {
@@ -54,7 +50,11 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    @CachePut(value = "flowers", key = "#result.id")
+    public Optional<Flower> saveFlower(Optional<Flower> flower) {
+        return Optional.empty();
+    }
+
+    @Override
     public Flower saveFlower(Flower flower) {
         return flowerRepository.save(flower);
     }

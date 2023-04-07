@@ -21,6 +21,11 @@ public class CartItem {
 
     private int quantity;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
     public CartItem(Optional<Flower> flower, int quantity) {
     }
 

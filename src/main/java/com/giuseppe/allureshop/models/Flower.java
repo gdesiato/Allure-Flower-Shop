@@ -3,6 +3,7 @@ package com.giuseppe.allureshop.models;
 
 import lombok.*;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @AllArgsConstructor
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-public class Flower {
+public class Flower implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

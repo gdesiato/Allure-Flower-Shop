@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -33,7 +34,7 @@ public class FlowerController {
     }
 
     @PostMapping("/new")
-    public String addNewFlower(@ModelAttribute Flower flower) {
+    public String addNewFlower(@ModelAttribute Optional<Flower> flower) {
         flowerService.saveFlower(flower);
         return "redirect:/flowers"; // redirect to the flowers page
     }

@@ -1,6 +1,7 @@
 package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.*;
+import com.giuseppe.allureshop.repositories.CartItemRepository;
 import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.FlowerService;
 import com.giuseppe.allureshop.services.UserService;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/cart")
@@ -25,6 +25,9 @@ public class CartController {
 
     @Autowired
     private FlowerService flowerService;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
 
     @GetMapping
@@ -46,56 +49,101 @@ public class CartController {
         return "new-cart";
     }
 
-    @GetMapping("/{cartId}")
-    @Transactional
-    public String getCartById(@PathVariable Long cartId, Model model) {
-        Cart cart = cartService.getCartById(cartId);
-        if (cart == null) {
+//    @GetMapping("/{cartId}")
+//    @Transactional
+//    public String getCartById(@PathVariable Long cartId, Model model) {
+//        Cart cart = cartService.getCartById(cartId);
+//        if (cart == null) {
+//            return "error";
+//        }
+//        model.addAttribute("cart", cart);
+//        return "cart";
+//    }
+
+    @GetMapping("/{userId}")
+    public String viewCart(@PathVariable("userId") Long userId, Model model) {
+        User user = userService.getUserById(userId).orElse(null);
+
+        if (user == null) {
             return "error";
         }
+
+        Cart cart = user.getCart();
+
         model.addAttribute("cart", cart);
+
         return "cart";
     }
 
     // change for user
 
+//    @PostMapping("/{userId}")
+//    @Transactional
+//    public String addToCart(@PathVariable Long userId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
+//        Optional<User> user = userService.getUserById(userId);
+//        if (!user.isPresent()) {
+//            return "error";
+//        }
+//        Cart cart = user.get().getCart();
+//        Optional<Flower> flowerOptional = flowerService.getFlowerById(flowerId);
+//        if (!flowerOptional.isPresent()) {
+//            return "error";
+//        }
+//        Flower flower = flowerOptional.get();
+//
+//        cartService.addToCart(cart, flowerOptional, quantity);
+//        model.addAttribute("cart", cart);
+//        return "cart";
+//    }
+
     @PostMapping("/{userId}")
     @Transactional
-    public String addToCart(@PathVariable Long userId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
-        Optional<User> user = userService.getUserById(userId);
-        if (!user.isPresent()) {
+    public String addToCart(@PathVariable("userId") Long userId,
+                            @RequestParam("flowerId") Long flowerId,
+                            @RequestParam("quantity") Integer quantity,
+                            Model model) {
+
+        Cart cart = cartService.addToCart(userId, flowerId, quantity);
+
+        if (cart == null) {
             return "error";
         }
-        Cart cart = user.get().getCart();
-        Optional<Flower> flower = flowerService.getFlowerById(flowerId);
-        if (flower == null) {
-            return "error";
-        }
-        cartService.addToCart(cart, flower, quantity);
+
         model.addAttribute("cart", cart);
         return "cart";
     }
 
-    @PostMapping("/{cartId}/items")
+    @PostMapping("/{userId}/items")
     @Transactional
-    public String addItemToCart(@PathVariable Long cartId, @RequestBody CartItem item, @RequestParam Optional<Flower> flower, Model model) {
-        Cart cart = cartService.getCartById(cartId);
+    public String addItemToCart(@PathVariable("userId") Long userId,
+                                @RequestParam("flowerId") Long flowerId,
+                                @RequestParam("quantity") Integer quantity,
+                                Model model) {
+
+        Cart cart = cartService.addToCart(userId, flowerId, quantity);
+
         if (cart == null) {
             return "error";
         }
-        cartService.addToCart(cart, flower, item.getQuantity());
+
         model.addAttribute("cart", cart);
         return "cart";
     }
 
     @DeleteMapping("/{cartId}/items/{itemId}")
     @Transactional
-    public String removeItemFromCart(@PathVariable Long cartId, @PathVariable CartItem itemId, Model model) {
+    public String removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId, Model model) {
         Cart cart = cartService.getCartById(cartId);
         if (cart == null) {
             return "error";
         }
-        cartService.removeItemFromCart(cart, itemId);
+
+        CartItem cartItem = cartItemRepository.findById(itemId).orElse(null);
+        if (cartItem == null) {
+            return "error";
+        }
+
+        cartService.removeItemFromCart(cart, cartItem);
         model.addAttribute("cart", cart);
         return "cart";
     }
@@ -111,4 +159,5 @@ public class CartController {
         model.addAttribute("totalPrice", totalPrice);
         return "totalPrice";
     }
+
 }

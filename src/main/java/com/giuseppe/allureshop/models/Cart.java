@@ -3,6 +3,7 @@ package com.giuseppe.allureshop.models;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +12,17 @@ import java.util.List;
 @Setter
 @Entity
 public class Cart {
+
+    public Cart() {
+    }
+
+    public List<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CartItem> items) {
+        this.items = items;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
