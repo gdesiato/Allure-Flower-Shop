@@ -2,27 +2,25 @@ package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.models.User;
-import com.giuseppe.allureshop.services.FlowerServiceImpl;
+import com.giuseppe.allureshop.services.FlowerService;
 import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController implements ErrorController {
+public class AdminController {
 
     @Autowired
     UserService userService;
 
     @Autowired
-    private FlowerServiceImpl flowerService;
+    private FlowerService flowerService;
 
 
     @GetMapping
@@ -67,7 +65,7 @@ public class AdminController implements ErrorController {
     @RequestMapping("flowers/delete/{id}")
     public String deleteFlower(@PathVariable(name = "id") Long id) {
         flowerService.deleteFlower(id);
-        return "redirect:/";
+        return "redirect:/admin/flowers/list";
     }
 
 }

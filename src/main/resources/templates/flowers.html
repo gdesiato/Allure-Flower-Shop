@@ -5,41 +5,47 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Flowers Manager</title>
+  <meta charset="utf-8"/>
+  <title>Flower List</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-
 </head>
 
 <body>
 
 <div layout:fragment="content" th:remove="tag">
 
-  <div align="center">
+  <div class="container">
     <h1>Flower List</h1>
-    <a th:href="@{/admin/flowers/new}">Add New Flower</a><br/>
-    <br/><br/>
-    <table border="1" cellpadding="10">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="flower : ${flowerList}">
-        <td th:text="${flower.name}"></td>
-        <td th:text="${flower.price}"></td>
-        <td>
-          <a th:href="@{/admin/flowers/delete/{id}(id=${flower.id})}">Delete Flower</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Flower ID</th>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="flower : ${flowerList}">
+          <td th:text="${flower.id}">Flower ID</td>
+          <td th:text="${flower.name}">Name</td>
+          <td th:text="${flower.price}">Price</td>
+
+          <td>    <!-- actions -->
+            <a th:href="@{/admin/flowers/update/{id}(id=${flower.id})}">Update</a>
+            <a th:href="@{/admin/flowers/delete/{id}(id=${flower.id})}" onclick="return confirm('Are you sure you want to delete this flower?')">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
   </div>
-
 </div>
-
 </body>
 </html>
