@@ -62,7 +62,7 @@ public class CartController {
 
     @GetMapping("/{userId}")
     public String viewCart(@PathVariable("userId") Long userId, Model model) {
-        User user = userService.getUserById(userId).orElse(null);
+        User user = userService.getUserById(userId);
 
         if (user == null) {
             return "error";

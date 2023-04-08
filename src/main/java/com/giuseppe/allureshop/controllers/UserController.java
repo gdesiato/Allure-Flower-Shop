@@ -55,6 +55,19 @@ public class UserController implements ErrorController {
         return "user-view";
     }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "update-user";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute User user) {
+        userService.updateUser(user);
+        return "redirect:/user/list";
+    }
+
 //    @GetMapping("/dashboard")
 //    public String showUserDashboard(Model model, String username) {
 //        User user = userService.getUser(username);
@@ -138,7 +151,6 @@ public class UserController implements ErrorController {
                 }
             }
         }
-
         return "user-dashboard-frag";
     }
 

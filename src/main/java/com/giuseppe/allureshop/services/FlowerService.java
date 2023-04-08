@@ -19,9 +19,8 @@ public class FlowerService {
         return flowerRepository.findAll();
     }
 
-    public Optional<Flower> getFlowerById(Long id) {
-        return Optional.ofNullable(flowerRepository.findById(id)
-                .orElse(null));
+    public Flower getFlowerById(Long id) {
+        return flowerRepository.findById(id).orElse(null);
     }
 
     public void deleteFlower(Long id) {
@@ -43,4 +42,16 @@ public class FlowerService {
     public Flower saveFlower(Flower flower) {
         return flowerRepository.save(flower);
     }
+
+
+    public void updateFlower(Flower flower) {
+        Flower existingFlower = flowerRepository.findById(flower.getId())
+                .orElseThrow(() -> new FlowerNotFoundException("Sorry, there is no flower found with id " + flower.getId()));
+
+        existingFlower.setName(flower.getName());
+        existingFlower.setPrice(flower.getPrice());
+
+        flowerRepository.save(existingFlower);
+    }
+
 }

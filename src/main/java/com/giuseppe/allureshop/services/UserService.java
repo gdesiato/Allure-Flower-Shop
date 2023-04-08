@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    PasswordEncoder passwordEncoder;
 
 
     @Transactional
@@ -51,9 +51,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Optional<User> getUserById(Long id) {
-        return Optional.ofNullable(userRepository.findById(id)
-                .orElse(null));
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Transactional
@@ -75,6 +74,22 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public User getUser(String username) throws EntityNotFoundException  {
         return userRepository.findByUsername(username);
+    }
+
+    public void updateUser(User user) {
+        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAddress(user.getAddress());
+
+        // Update the password only if it has been changed
+        if (!existingUser.getPassword().equals(user.getPassword())) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        userRepository.save(existingUser);
     }
 
 

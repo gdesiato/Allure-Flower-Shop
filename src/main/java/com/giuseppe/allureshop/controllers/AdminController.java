@@ -1,5 +1,6 @@
 package com.giuseppe.allureshop.controllers;
 
+
 import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.services.FlowerService;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -65,6 +67,21 @@ public class AdminController {
     @RequestMapping("flowers/delete/{id}")
     public String deleteFlower(@PathVariable(name = "id") Long id) {
         flowerService.deleteFlower(id);
+        return "redirect:/admin/flowers/list";
+    }
+
+    // Flower Update
+
+    @GetMapping("/flowers/update/{id}")
+    public String showUpdateFlowerPage(@PathVariable("id") Long id, Model model) {
+        Flower flower = flowerService.getFlowerById(id);
+        model.addAttribute("flower", flower);
+        return "update-flower";
+    }
+
+    @PostMapping("/flowers/update")
+    public String updateFlower(@ModelAttribute Flower flower) {
+        flowerService.updateFlower(flower);
         return "redirect:/admin/flowers/list";
     }
 
