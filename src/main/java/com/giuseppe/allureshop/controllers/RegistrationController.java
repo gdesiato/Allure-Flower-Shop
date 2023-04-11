@@ -12,10 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -52,12 +49,16 @@ public class RegistrationController implements ErrorController {
 
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, Model model) {
+    public String registerUser(@ModelAttribute("user") User user, @RequestParam("password-repeat") String confirmPassword, Model model) {
         User existingUser = userService.findByUsername(user.getUsername());
         if (existingUser != null) {
-            model.addAttribute("registrationError", "Username already exists.");
-            return "registration"; // Replace with your registration view name
+            return "username-exists";
         }
+
+        if (!user.getPassword().equals(confirmPassword)) {
+            return "password-mismatch";
+        }
+
         Role userRole = roleRepository.findRoleByName("USER");
         if (userRole == null) {
             userRole = new Role();
@@ -70,7 +71,6 @@ public class RegistrationController implements ErrorController {
 
         userService.saveUser(user);
 
-        //The creation of a new cart causes an error at the moment of login
         Cart userCart = new Cart();
         userCart.setUser(user);
         userCart.setUsername(user.getUsername());
@@ -78,7 +78,8 @@ public class RegistrationController implements ErrorController {
 
         model.addAttribute("cart", userCart);
         model.addAttribute("items", userCart.getItems());
+        model.addAttribute("username", user.getUsername());
 
-        return "user-dashboard-frag";
+        return "registration-confirmation";
     }
 }
