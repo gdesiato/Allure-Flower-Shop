@@ -49,17 +49,6 @@ public class CartController {
         return "new-cart";
     }
 
-//    @GetMapping("/{cartId}")
-//    @Transactional
-//    public String getCartById(@PathVariable Long cartId, Model model) {
-//        Cart cart = cartService.getCartById(cartId);
-//        if (cart == null) {
-//            return "error";
-//        }
-//        model.addAttribute("cart", cart);
-//        return "cart";
-//    }
-
     @GetMapping("/{userId}")
     public String viewCart(@PathVariable("userId") Long userId, Model model) {
         User user = userService.getUserById(userId);
@@ -75,26 +64,6 @@ public class CartController {
         return "cart";
     }
 
-    // change for user
-
-//    @PostMapping("/{userId}")
-//    @Transactional
-//    public String addToCart(@PathVariable Long userId, @RequestParam Long flowerId, @RequestParam int quantity, Model model) {
-//        Optional<User> user = userService.getUserById(userId);
-//        if (!user.isPresent()) {
-//            return "error";
-//        }
-//        Cart cart = user.get().getCart();
-//        Optional<Flower> flowerOptional = flowerService.getFlowerById(flowerId);
-//        if (!flowerOptional.isPresent()) {
-//            return "error";
-//        }
-//        Flower flower = flowerOptional.get();
-//
-//        cartService.addToCart(cart, flowerOptional, quantity);
-//        model.addAttribute("cart", cart);
-//        return "cart";
-//    }
 
     @PostMapping("/{userId}")
     @Transactional

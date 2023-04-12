@@ -68,56 +68,6 @@ public class UserController implements ErrorController {
         return "redirect:/user/list";
     }
 
-//    @GetMapping("/dashboard")
-//    public String showUserDashboard(Model model, String username) {
-//        User user = userService.getUser(username);
-//        model.addAttribute("user", user);
-//        return "user-dashboard-frag";
-//        //return "user-dashboard";
-//    }
-
-//    @GetMapping("/dashboard")
-//    public String showUserDashboard(Principal principal, Model model) {
-//        if (principal != null) {
-//            String username = principal.getName();
-//            User user = userService.findByUsername(username);
-//
-//            if (user != null) {
-//                model.addAttribute("user", user);
-//                Cart userCart = cartService.findCartByUser(user);
-//                model.addAttribute("cart", userCart);
-//                model.addAttribute("items", userCart.getItems());
-//            }
-//        }
-//
-//        return "user-dashboard-frag";
-//    }
-
-//    @GetMapping("/dashboard")
-//    public String showUserDashboard(Principal principal, Model model) {
-//        if (principal != null) {
-//            String username = principal.getName();
-//            User user = userService.findByUsername(username);
-//
-//            if (user != null) {
-//                model.addAttribute("user", user);
-//                Cart userCart = cartService.findCartByUser(user);
-//
-//                if (userCart == null) {
-//                    userCart = new Cart();
-//                    userCart.setUser(user);
-//                    userCart.setUsername(user.getUsername());
-//                    cartService.saveCart(userCart);
-//                }
-//
-//                model.addAttribute("cart", userCart);
-//                model.addAttribute("items", userCart.getItems());
-//            }
-//        }
-//
-//        return "user-dashboard-frag";
-//    }
-
     @GetMapping("/dashboard")
     public String showUserDashboard(Principal principal, Model model) {
         if (principal != null) {
@@ -153,5 +103,4 @@ public class UserController implements ErrorController {
         }
         return "user-dashboard-frag";
     }
-
 }

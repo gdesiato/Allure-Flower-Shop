@@ -45,13 +45,6 @@ public class CartService {
         return cartRepository.findByUsername(username);
     }
 
-    // Add flower to the cart
-//    @Transactional
-//    public void addToCart(Cart cartId, Optional<Flower> flower, int quantity) {
-//        CartItem item = new CartItem(flower, quantity);
-//        cartId.addItem(item);
-//        cartRepository.save(cartId);
-//    }
 
     public Cart addToCart(Long userId, Long flowerId, Integer quantity) {
 
@@ -76,17 +69,12 @@ public class CartService {
             newCartItem.setQuantity(quantity);
             newCartItem.setUser(user);
 
-            // Save the new cart item
             cartItemRepository.save(newCartItem);
-
             // Add the new cart item to the user's cart
             user.getCartItems().add(newCartItem);
         }
 
-        // Save the updated user
         userRepository.save(user);
-
-        // Return the user's cart
         return user.getCart();
     }
 
