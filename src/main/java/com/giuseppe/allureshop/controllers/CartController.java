@@ -99,10 +99,10 @@ public class CartController {
         return "cart";
     }
 
-    @DeleteMapping("/{cartId}/items/{itemId}")
+    @PostMapping("/remove/{itemId}")
     @Transactional
-    public String removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId, Model model) {
-        Cart cart = cartService.getCartById(cartId);
+    public String removeItemFromCart(@PathVariable Long itemId, @AuthenticationPrincipal User user, Model model) {
+        Cart cart = cartService.getShoppingCartForUser(user.getUsername());
         if (cart == null) {
             return "error";
         }
@@ -114,7 +114,20 @@ public class CartController {
 
         cartService.removeItemFromCart(cart, cartItem);
         model.addAttribute("cart", cart);
-        return "cart";
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/clear")
+    @Transactional
+    public String clearCart(@AuthenticationPrincipal User user, Model model) {
+        Cart cart = cartService.getShoppingCartForUser(user.getUsername());
+        if (cart == null) {
+            return "error";
+        }
+
+        cartService.clearCart(cart);
+        model.addAttribute("cart", cart);
+        return "redirect:/cart";
     }
 
     @GetMapping("/{cartId}/total")

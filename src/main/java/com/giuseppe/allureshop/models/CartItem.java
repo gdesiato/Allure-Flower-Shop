@@ -25,6 +25,9 @@ public class CartItem {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     public CartItem(Optional<Flower> flower, int quantity) {
     }

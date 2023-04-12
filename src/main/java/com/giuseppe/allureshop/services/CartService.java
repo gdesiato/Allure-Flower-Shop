@@ -79,18 +79,15 @@ public class CartService {
     }
 
 
-    // remove product from the cart
     @Transactional
     public void removeItemFromCart(Cart cart, CartItem item) {
-        cart.removeItem(item);
-        cartRepository.save(cart);
+        cartItemRepository.deleteById(item.getId());
     }
 
     // empty the cart
     @Transactional
     public void clearCart(Cart cart) {
-        cart.clearItems();
-        cartRepository.save(cart);
+        cartItemRepository.deleteAllByCart(cart);
     }
 
     @Transactional

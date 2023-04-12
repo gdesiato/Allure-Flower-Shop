@@ -22,22 +22,28 @@
             <th>Quantity</th>
             <th>Price</th>
             <th>Total Price</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:if="${cart.items != null}">
             <th:block th:each="item : ${cart.items}">
                 <tr>
-                    <td th:text="${item.product.name}"></td>
+                    <td th:text="${item.flower.name}"></td>
                     <td th:text="${item.quantity}"></td>
-                    <td th:text="${item.product.price}"></td>
+                    <td th:text="${item.flower.price}"></td>
                     <td th:text="${item.getTotalPrice()}"></td>
+                    <td>
+                        <form th:action="@{/cart/remove/{id}(id=${item.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
                 </tr>
             </th:block>
         </th:block>
         <th:block th:if="${cart.items == null}">
             <tr>
-                <td colspan="4">Your cart is empty.</td>
+                <td colspan="5">Your cart is empty.</td>
             </tr>
         </th:block>
         </tbody>
@@ -45,6 +51,11 @@
         <tr>
             <td colspan="3">Total:</td>
             <td th:text="${cart.getTotalPrice()}"></td>
+            <td>
+                <form th:action="@{/cart/clear}" method="post">
+                    <button type="submit" class="btn btn-danger">Clear Cart</button>
+                </form>
+            </td>
         </tr>
         </tfoot>
     </table>

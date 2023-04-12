@@ -28,7 +28,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CartItem> items;
 
     @OneToOne
@@ -36,15 +36,6 @@ public class Cart {
     private User user;
 
     private String username;
-
-    public void addItem(CartItem item) {
-    }
-
-    public void removeItem(CartItem item) {
-    }
-
-    public void clearItems() {
-    }
 
     public double getTotalPrice() {
         double totalPrice = 0.0;
