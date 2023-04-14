@@ -1,5 +1,7 @@
 # Allure-Flower-Shop
 
+![](../../cotton.png)
+
 Allure is a web-based application built with Java Spring that provides an online platform for customers to order flowers and plants. The application allows customers to browse through a variety of options and place their orders with ease. It also enables the shop owners to manage their inventory and track orders.
 
 ### Features
