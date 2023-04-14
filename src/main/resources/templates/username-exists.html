@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      layout:decorate="~{fragments/layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>Username Exists</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Username Exists</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-  <h1>Username already exists.</h1>
-  <p>Please <a href="/registration">click here</a> to try again with a different username.</p>
+    <h1>Username already exists.</h1>
+    <p>Please <a href="/registration">click here</a> to try again with a different username.</p>
 </div>
 </body>
 </html>
