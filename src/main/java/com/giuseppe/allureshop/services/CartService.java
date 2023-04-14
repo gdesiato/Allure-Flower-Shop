@@ -53,7 +53,7 @@ public class CartService {
         Flower flower = flowerRepository.findById(flowerId)
                 .orElseThrow(() -> new FlowerNotFoundException("Flower not found with id: " + flowerId));
 
-        CartItem existingCartItem = user.getCartItems().stream()
+        CartItem existingCartItem = user.getCart().getItems().stream()
                 .filter(cartItem -> cartItem.getFlower().getId().equals(flowerId))
                 .findFirst()
                 .orElse(null);
@@ -68,10 +68,11 @@ public class CartService {
             newCartItem.setFlower(flower);
             newCartItem.setQuantity(quantity);
             newCartItem.setUser(user);
+            newCartItem.setCart(user.getCart());
 
             cartItemRepository.save(newCartItem);
             // Add the new cart item to the user's cart
-            user.getCartItems().add(newCartItem);
+            user.getCart().getItems().add(newCartItem);
         }
 
         userRepository.save(user);
