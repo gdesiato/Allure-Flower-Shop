@@ -68,11 +68,11 @@ public class CartController {
     @PostMapping("/{userId}")
     @Transactional
     public String addToCart(@PathVariable("userId") Long userId,
-                            @RequestParam("flowerId") Long flowerId,
+                            @RequestParam("flowerName") String flowerName,
                             @RequestParam("quantity") Integer quantity,
                             Model model) {
 
-        Cart cart = cartService.addToCart(userId, flowerId, quantity);
+        Cart cart = cartService.addToCart(userId, flowerName, quantity);
 
         if (cart == null) {
             return "error";
@@ -85,11 +85,11 @@ public class CartController {
     @PostMapping("/{userId}/items")
     @Transactional
     public String addItemToCart(@PathVariable("userId") Long userId,
-                                @RequestParam("flowerId") Long flowerId,
+                                @RequestParam("flowerName") String flowerName,
                                 @RequestParam("quantity") Integer quantity,
                                 Model model) {
 
-        Cart cart = cartService.addToCart(userId, flowerId, quantity);
+        Cart cart = cartService.addToCart(userId, flowerName, quantity);
 
         if (cart == null) {
             return "error";

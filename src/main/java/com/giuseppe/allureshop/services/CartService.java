@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,15 +47,54 @@ public class CartService {
     }
 
 
-    public Cart addToCart(Long userId, Long flowerId, Integer quantity) {
+//    public Cart addToCart(Long userId, Long flowerId, Integer quantity) {
+//
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+//        Flower flower = flowerRepository.findById(flowerId)
+//                .orElseThrow(() -> new FlowerNotFoundException("Flower not found with id: " + flowerId));
+//
+//        CartItem existingCartItem = user.getCart().getItems().stream()
+//                .filter(cartItem -> cartItem.getFlower().getId().equals(flowerId))
+//                .findFirst()
+//                .orElse(null);
+//
+//        if (existingCartItem != null) {
+//            // Update the quantity of the existing cart item
+//            existingCartItem.setQuantity(existingCartItem.getQuantity() + quantity);
+//            cartItemRepository.save(existingCartItem);
+//        } else {
+//            // Create a new cart item
+//            CartItem newCartItem = new CartItem();
+//            newCartItem.setFlower(flower);
+//            newCartItem.setQuantity(quantity);
+//            newCartItem.setUser(user);
+//            newCartItem.setCart(user.getCart());
+//
+//            cartItemRepository.save(newCartItem);
+//            // Add the new cart item to the user's cart
+//            user.getCart().getItems().add(newCartItem);
+//        }
+//
+//        userRepository.save(user);
+//        return user.getCart();
+//    }
+
+    //search the flower by name
+    public Cart addToCart(Long userId, String flowerName, Integer quantity) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
-        Flower flower = flowerRepository.findById(flowerId)
-                .orElseThrow(() -> new FlowerNotFoundException("Flower not found with id: " + flowerId));
+        List<Flower> flowers = flowerRepository.findByName(flowerName);
+
+        if (flowers.isEmpty()) {
+            throw new FlowerNotFoundException("Flower not found with name: " + flowerName);
+        }
+        // Assuming you want to add the first flower with the given name
+        Flower flower = flowers.get(0);
 
         CartItem existingCartItem = user.getCart().getItems().stream()
-                .filter(cartItem -> cartItem.getFlower().getId().equals(flowerId))
+                .filter(cartItem -> cartItem.getFlower().getId().equals(flower.getId()))
                 .findFirst()
                 .orElse(null);
 
