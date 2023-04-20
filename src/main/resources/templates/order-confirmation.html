@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+</head>
+
+<body>
+
+<div layout:fragment="content" th:remove="tag">
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order, <span th:text="${user.firstName}"></span>!</p>
+        <p>Your order number is: <span th:text="${order.id}"></span></p>
+        <p>A confirmation email has been sent to <span th:text="${user.email}"></span>.</p>
+
+        <h2>Order Summary</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.flower.name}"></td>
+                <td th:text="${item.flower.price}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.total}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Total: <span th:text="${order.total}"></span></h3>
+
+        <h2>Shipping Information</h2>
+        <p>
+            <strong>Address:</strong><br>
+            <span th:text="${order.address}"></span><br>
+            <span th:text="${order.city}"></span>, <span th:text="${order.state}"></span> <span th:text="${order.zipCode}"></span><br>
+            <span th:text="${order.country}"></span>
+        </p>
+
+        <a href="/" class="btn btn-primary">Continue Shopping</a>
+    </div>
+</div>
+</body>
+</html>

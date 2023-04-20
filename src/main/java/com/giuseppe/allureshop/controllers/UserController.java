@@ -2,9 +2,11 @@ package com.giuseppe.allureshop.controllers;
 
 import com.giuseppe.allureshop.models.Cart;
 import com.giuseppe.allureshop.models.CartItem;
+import com.giuseppe.allureshop.models.Order;
 import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.repositories.RoleRepository;
 import com.giuseppe.allureshop.services.CartService;
+import com.giuseppe.allureshop.services.OrderService;
 import com.giuseppe.allureshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -32,6 +34,9 @@ public class UserController implements ErrorController {
 
     @Autowired
     CartService cartService;
+
+    @Autowired
+    OrderService orderService;
 
 
     @GetMapping("/list")
@@ -103,4 +108,53 @@ public class UserController implements ErrorController {
         }
         return "user-dashboard-frag";
     }
+
+    @GetMapping("/checkout")
+    public String showCheckoutPage(Principal principal, Model model) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = userService.findByUsername(username);
+
+            if (user != null) {
+                Cart userCart = cartService.findCartByUser(user);
+
+                if (userCart == null) {
+                    return "redirect:/user/dashboard";
+                }
+
+                List<CartItem> items = userCart.getItems();
+                model.addAttribute("cart", userCart);
+                model.addAttribute("items", items);
+                model.addAttribute("user", user);
+                model.addAttribute("order", new Order());
+
+                return "checkout";
+            }
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("/process-order")
+    public String processOrder(@ModelAttribute("order") Order order, Principal principal, Model model) {
+        // Get the current user
+        User user = userService.findByUsername(principal.getName());
+
+        // Set the user for the order
+        order.setUser(user);
+
+        // Save the order
+        Order savedOrder = orderService.saveOrder(order);
+
+        // Clear the user's cart
+        Cart userCart = cartService.findCartByUser(user);
+        userCart.getItems().clear();
+        cartService.saveCart(userCart);
+
+        // Add the saved order to the model for display on the confirmation page
+        model.addAttribute("order", savedOrder);
+
+        // Redirect the user to a confirmation page
+        return "redirect:/order-confirmation";
+    }
+
 }
