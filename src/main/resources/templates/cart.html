@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <th:block th:if="${cart.items != null}">
+        <th:block th:if="${!cart.items.empty}">
             <th:block th:each="item : ${cart.items}">
                 <tr>
                     <td th:text="${item.flower.name}"></td>
@@ -39,7 +39,7 @@
                 </tr>
             </th:block>
         </th:block>
-        <th:block th:if="${cart.items == null}">
+        <th:block th:if="${cart.items.empty}">
             <tr>
                 <td colspan="5">Your cart is empty.</td>
             </tr>

@@ -20,6 +20,16 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private String address;
+
+    private String city;
+
+    private String state;
+
+    private String zipCode;
+
+    private String country;
+
     private Double totalAmount;
 
     private LocalDateTime createdAt;
