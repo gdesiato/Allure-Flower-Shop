@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -135,7 +136,7 @@ public class UserController implements ErrorController {
     }
 
     @PostMapping("/process-order")
-    public String processOrder(@ModelAttribute("order") Order order, Principal principal, Model model) {
+    public String processOrder(@ModelAttribute("order") Order order, Principal principal, Model model, RedirectAttributes redirectAttributes) {
         // Get the current user
         User user = userService.findByUsername(principal.getName());
 
@@ -156,11 +157,12 @@ public class UserController implements ErrorController {
         userCart.getItems().clear();
         cartService.saveCart(userCart);
 
-        // Add the saved order to the model for display on the confirmation page
-        model.addAttribute("order", savedOrder);
+        // Add the saved order and the user as flash attributes
+        redirectAttributes.addFlashAttribute("order", savedOrder);
+        redirectAttributes.addFlashAttribute("user", user);
 
         // Redirect the user to a confirmation page
-        return "redirect:/order-confirmation";
+        return "redirect:/user/order-confirmation";
     }
 
     @GetMapping("/order-confirmation")
