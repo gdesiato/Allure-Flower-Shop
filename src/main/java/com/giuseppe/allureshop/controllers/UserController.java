@@ -142,11 +142,17 @@ public class UserController implements ErrorController {
         // Set the user for the order
         order.setUser(user);
 
+        // Get the user's cart
+        Cart userCart = cartService.findCartByUser(user);
+
+        // Add the cart items to the order
+        List<CartItem> items = userCart.getItems();
+        order.setItems(items);
+
         // Save the order
         Order savedOrder = orderService.saveOrder(order);
 
         // Clear the user's cart
-        Cart userCart = cartService.findCartByUser(user);
         userCart.getItems().clear();
         cartService.saveCart(userCart);
 
@@ -155,6 +161,16 @@ public class UserController implements ErrorController {
 
         // Redirect the user to a confirmation page
         return "redirect:/order-confirmation";
+    }
+
+    @GetMapping("/order-confirmation")
+    public String showOrderConfirmationPage(Model model) {
+        // Check if the order and user are present in the model
+        if (!model.containsAttribute("order") || !model.containsAttribute("user")) {
+            return "redirect:/user/dashboard";
+        }
+
+        return "order-confirmation";
     }
 
 }

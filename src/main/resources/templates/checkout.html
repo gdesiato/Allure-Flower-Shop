@@ -23,15 +23,15 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="item : ${items}">
+      <tr th:each="item : ${cart.items}">
         <td th:text="${item.flower.name}"></td>
         <td th:text="${item.flower.price}"></td>
         <td th:text="${item.quantity}"></td>
-        <td th:text="${item.total}"></td>
+        <td th:text="${item.getTotalPrice()}"></td>
       </tr>
       </tbody>
     </table>
-    <h3>Total: <span th:text="${cart.total}"></span></h3>
+    <h3>Total: <span th:text="${cart.getTotalPrice()}"></span></h3>
     <h2>Shipping Information</h2>
 
     <!-- Form to collect shipping and payment information -->
@@ -56,8 +56,6 @@
         <label for="country">Country</label>
         <input type="text" class="form-control" id="country" th:field="*{country}" required>
       </div>
-
-      <!-- fields for payment information? -->
 
       <button type="submit" class="btn btn-primary">Place Order</button>
     </form>

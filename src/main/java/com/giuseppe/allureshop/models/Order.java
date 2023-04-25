@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,10 +36,18 @@ public class Order {
 
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
 
+    public void setItems(List<CartItem> items) {
+        this.items = new ArrayList<>(items);
+        for (CartItem item : items) {
+            item.setOrder(this);
+        }
+    }
 }

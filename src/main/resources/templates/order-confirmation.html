@@ -32,11 +32,11 @@
                 <td th:text="${item.flower.name}"></td>
                 <td th:text="${item.flower.price}"></td>
                 <td th:text="${item.quantity}"></td>
-                <td th:text="${item.total}"></td>
+                <td th:text="${item.getTotalPrice()}"></td>
             </tr>
             </tbody>
         </table>
-        <h3>Total: <span th:text="${order.total}"></span></h3>
+        <h3>Total: <span th:text="${order.totalAmount}"></span></h3>
 
         <h2>Shipping Information</h2>
         <p>
