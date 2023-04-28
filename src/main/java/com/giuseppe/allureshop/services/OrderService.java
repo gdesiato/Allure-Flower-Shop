@@ -1,7 +1,10 @@
 package com.giuseppe.allureshop.services;
 
+import com.giuseppe.allureshop.models.Cart;
+import com.giuseppe.allureshop.models.CartItem;
 import com.giuseppe.allureshop.models.Order;
 import com.giuseppe.allureshop.models.User;
+import com.giuseppe.allureshop.repositories.CartRepository;
 import com.giuseppe.allureshop.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
 
     @Transactional
     public Order createOrder(User user, Double totalAmount) {
@@ -41,6 +47,22 @@ public class OrderService {
     @Transactional
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    @Transactional
+    public Order processOrderAndClearCart(Order order, User user, Cart userCart) {
+        // Add the cart items to the order
+        List<CartItem> items = userCart.getItems();
+        order.setItems(items);
+
+        // Save the order
+        Order savedOrder = orderRepository.save(order);
+
+        // Clear the user's cart
+        userCart.getItems().clear();
+        cartRepository.save(userCart);
+
+        return savedOrder;
     }
 
 }

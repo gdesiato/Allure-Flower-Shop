@@ -146,16 +146,8 @@ public class UserController implements ErrorController {
         // Get the user's cart
         Cart userCart = cartService.findCartByUser(user);
 
-        // Add the cart items to the order
-        List<CartItem> items = userCart.getItems();
-        order.setItems(items);
-
-        // Save the order
-        Order savedOrder = orderService.saveOrder(order);
-
-        // Clear the user's cart
-        userCart.getItems().clear();
-        cartService.saveCart(userCart);
+        // Process the order and clear the cart
+        Order savedOrder = orderService.processOrderAndClearCart(order, user, userCart);
 
         // Add the saved order and the user as flash attributes
         redirectAttributes.addFlashAttribute("order", savedOrder);
