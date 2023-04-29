@@ -44,10 +44,15 @@ public class Order {
         createdAt = LocalDateTime.now();
     }
 
-    public void setItems(List<CartItem> items) {
-        this.items = new ArrayList<>(items);
-        for (CartItem item : items) {
-            item.setOrder(this);
-        }
+//    public void setItems(List<CartItem> items) {
+//        this.items = new ArrayList<>(items);
+//        for (CartItem item : items) {
+//            item.setOrder(this);
+//        }
+//    }
+
+    public void addItem(CartItem item) {
+        items.add(item);
+        item.setOrder(this);
     }
 }

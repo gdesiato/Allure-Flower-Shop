@@ -147,7 +147,7 @@ public class UserController implements ErrorController {
         Cart userCart = cartService.findCartByUser(user);
 
         // Process the order and clear the cart
-        Order savedOrder = orderService.processOrderAndClearCart(order, user, userCart);
+        Order savedOrder = orderService.processOrderAndClearCart(order, userCart);
 
         // Add the saved order and the user as flash attributes
         redirectAttributes.addFlashAttribute("order", savedOrder);
@@ -159,7 +159,6 @@ public class UserController implements ErrorController {
 
     @GetMapping("/order-confirmation")
     public String showOrderConfirmationPage(Model model) {
-        // Check if the order and user are present in the model
         if (!model.containsAttribute("order") || !model.containsAttribute("user")) {
             return "redirect:/user/dashboard";
         }

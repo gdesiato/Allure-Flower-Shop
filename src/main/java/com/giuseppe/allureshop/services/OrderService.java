@@ -50,13 +50,20 @@ public class OrderService {
     }
 
     @Transactional
-    public Order processOrderAndClearCart(Order order, User user, Cart userCart) {
+    public Order processOrderAndClearCart(Order order, Cart userCart) {
         // Add the cart items to the order
         List<CartItem> items = userCart.getItems();
-        order.setItems(items);
+        for (CartItem item : items) {
+            order.addItem(item);
+        }
 
         // Save the order
         Order savedOrder = orderRepository.save(order);
+
+        // Detach CartItems from the Cart before clearing
+        for (CartItem item : items) {
+            item.setCart(null);
+        }
 
         // Clear the user's cart
         userCart.getItems().clear();
