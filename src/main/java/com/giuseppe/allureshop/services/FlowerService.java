@@ -43,6 +43,10 @@ public class FlowerService {
         return flowerRepository.save(flower);
     }
 
+    public void saveFlowers(List<Flower> flowers) {
+        flowerRepository.saveAll(flowers);
+    }
+
 
     public void updateFlower(Flower flower) {
         Flower existingFlower = flowerRepository.findById(flower.getId())

@@ -24,4 +24,6 @@ public class Flower implements Serializable {
     @Column(name = "price")
     private double price;
 
+    @Transient
+    private int quantity;
 }

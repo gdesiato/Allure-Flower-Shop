@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       xmlns:th="http://www.thymeleaf.org"
-       layout:decorate="~{fragments/layout}">
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,16 +10,16 @@
 
 <body>
 
-    <div layout:fragment="content" th:remove="tag">
-        <h1>New Flower</h1>
-        <form action="#" th:action="@{/admin/flowers/new}" th:object="${flower}" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" th:field="*{name}" required><br><br>
-            <label for="price">Price:</label>
-            <input type="text" id="price" th:field="*{price}" required><br><br>
-            <button type="submit">Create Flower</button>
-        </form>
-    </div>
+<div layout:fragment="content" th:remove="tag">
+    <h1>New Flowers</h1>
+    <form action="#" th:action="@{/admin/flowers/new}" th:object="${flower}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required><br><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" th:field="*{price}" required><br><br>
+        <button type="submit">Add Flower</button>
+    </form>
+</div>
 
 </body>
 </html>
