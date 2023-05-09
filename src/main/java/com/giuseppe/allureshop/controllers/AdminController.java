@@ -64,29 +64,6 @@ public class AdminController {
         return "redirect:/admin/flowers/list";
     }
 
-//    @GetMapping("flowers/new")
-//    public String newFlower(Model model) {
-//        List<Flower> flowers = new ArrayList<>();
-//        flowers.add(new Flower());
-//        model.addAttribute("flowers", flowers);
-//        return "new-flower";
-//    }
-//
-//    @PostMapping("flowers/new")
-//    public String addNewFlower(@ModelAttribute("flowers") List<Flower> flowers, @RequestParam int quantity) {
-//        List<Flower> flowerList = new ArrayList<>();
-//        for (int i = 0; i < quantity; i++) {
-//            for (Flower flower : flowers) {
-//                Flower newFlower = new Flower();
-//                newFlower.setName(flower.getName());
-//                newFlower.setPrice(flower.getPrice());
-//                flowerList.add(newFlower);
-//            }
-//        }
-//        flowerService.saveFlowers(flowerList);
-//        return "redirect:/admin/flowers/list";
-//    }
-
     @RequestMapping("flowers/delete/{id}")
     public String deleteFlower(@PathVariable(name = "id") Long id) {
         flowerService.deleteFlower(id);
