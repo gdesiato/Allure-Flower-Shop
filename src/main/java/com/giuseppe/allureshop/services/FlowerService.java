@@ -4,6 +4,9 @@ import com.giuseppe.allureshop.exceptions.FlowerNotFoundException;
 import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.repositories.FlowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,14 +18,17 @@ public class FlowerService {
     @Autowired
     FlowerRepository flowerRepository;
 
+    //@Cacheable(value = "flowers")
     public List<Flower> getAllFlowers() {
         return flowerRepository.findAll();
     }
 
+    //@Cacheable(value = "flower", key = "#id")
     public Flower getFlowerById(Long id) {
         return flowerRepository.findById(id).orElse(null);
     }
 
+    //@CacheEvict(value = "flower", key = "#id")
     public void deleteFlower(Long id) {
         flowerRepository.deleteById(id);
     }
@@ -39,6 +45,7 @@ public class FlowerService {
         }
     }
 
+    //@CachePut(value = "flower", key = "#flower.id")
     public Flower saveFlower(Flower flower) {
         return flowerRepository.save(flower);
     }
@@ -46,7 +53,6 @@ public class FlowerService {
     public void saveFlowers(List<Flower> flowers) {
         flowerRepository.saveAll(flowers);
     }
-
 
     public void updateFlower(Flower flower) {
         Flower existingFlower = flowerRepository.findById(flower.getId())
