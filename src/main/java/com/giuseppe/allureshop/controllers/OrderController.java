@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.security.Principal;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class OrderController {
@@ -31,7 +34,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    private static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @PostMapping("/process-order")
     public String processOrder(@ModelAttribute("order") Order order,
@@ -40,38 +43,60 @@ public class OrderController {
                                Principal principal,
                                RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors()) {
-            return "orderForm";
+        try {
+            LOGGER.info("Entered processOrder method.");
+            if (bindingResult.hasErrors()) {
+                return "orderForm";
+            }
+
+            User user = userService.findByUsername(principal.getName());
+            order.setUser(user);
+
+            Cart cart = cartService.getShoppingCartForUser(user.getUsername());
+            double totalCost = cart.getTotalPrice();
+            LOGGER.info("Total cost: " + totalCost);
+
+            order.setTotalCost(totalCost);
+
+            redirectAttributes.addFlashAttribute("totalCost", totalCost);
+            LOGGER.info("Stored flash attribute: " + redirectAttributes.getFlashAttributes());
+
+            orderService.save(order);
+
+            redirectAttributes.addFlashAttribute("totalCost", totalCost);
+
+            model.addAttribute("items", cart.getItems());
+
+        } catch(Exception e) {
+            StringWriter stringWriter = new StringWriter();
+            e.printStackTrace(new PrintWriter(stringWriter));
+            LOGGER.info("Exception in processOrder: " + e.getMessage() + "\nStackTrace: " + stringWriter.toString());
         }
-
-        User user = userService.findByUsername(principal.getName());
-        order.setUser(user);
-
-        Cart cart = cartService.getShoppingCartForUser(user.getUsername());
-        double totalCost = cart.getTotalPrice();
-        LOGGER.info("Total cost: " + totalCost);
-
-        order.setTotalCost(totalCost);
-
-        redirectAttributes.addFlashAttribute("totalCost", totalCost);
-        LOGGER.info("Stored flash attribute: " + redirectAttributes.getFlashAttributes());
-
-        orderService.save(order);
-
-        redirectAttributes.addFlashAttribute("totalCost", totalCost);
-
-        model.addAttribute("items", cart.getItems());
-
         return "redirect:/order-confirmation";
     }
 
     @GetMapping("/order-confirmation")
-    public String orderConfirmation(Model model, RedirectAttributes redirectAttributes) {
-        LOGGER.info("Retrieved flash attribute: " + redirectAttributes.getFlashAttributes());
-        if (redirectAttributes.getFlashAttributes().containsKey("totalCost")) {
-            model.addAttribute("totalCost", redirectAttributes.getFlashAttributes().get("totalCost"));
+    public String orderConfirmation(Model model, Principal principal) {
+        try {
+            LOGGER.info("Entered orderConfirmation method.");
+            User user = userService.findByUsername(principal.getName());
+            Order order = orderService.findOrderByUser(user);
+
+            if (order != null) {
+                LOGGER.info("Order found: " + order.getId() + ", Total Cost: " + order.getTotalCost());
+                model.addAttribute("totalCost", order.getTotalCost());
+            } else {
+                LOGGER.info("No order found for user: " + user.getUsername());
+            }
+
+        } catch(Exception e) {
+            StringWriter stringWriter = new StringWriter();
+            e.printStackTrace(new PrintWriter(stringWriter));
+            LOGGER.info("Exception in orderConfirmation: " + e.getMessage() + "\nStackTrace: " + stringWriter.toString());
         }
+
         return "order-confirmation";
     }
+
 
 }

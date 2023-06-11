@@ -69,4 +69,9 @@ public class OrderService {
     public Order save(Order order) {
         return orderRepository.save(order);
     }
+
+    @Transactional
+    public Order findOrderByUser(User user) {
+        return orderRepository.findTopByUserOrderByCreatedAtDesc(user);
+    }
 }
