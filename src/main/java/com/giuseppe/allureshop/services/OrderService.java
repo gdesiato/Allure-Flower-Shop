@@ -65,4 +65,8 @@ public class OrderService {
         return savedOrder;
     }
 
+    @Transactional
+    public Order save(Order order) {
+        return orderRepository.save(order);
+    }
 }

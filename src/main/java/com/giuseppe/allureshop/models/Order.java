@@ -23,18 +23,14 @@ public class Order {
     private User user;
 
     private String address;
-
     private String city;
-
     private String state;
-
     private String zipCode;
-
     private String country;
-
     private Double totalAmount;
-
     private LocalDateTime createdAt;
+    private double totalCost;
+
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
@@ -54,5 +50,13 @@ public class Order {
     public void addItem(CartItem item) {
         items.add(item);
         item.setOrder(this);
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public double getTotalCost() {
+        return this.totalCost;
     }
 }

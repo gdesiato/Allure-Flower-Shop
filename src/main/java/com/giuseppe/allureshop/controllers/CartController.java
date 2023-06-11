@@ -133,12 +133,8 @@ public class CartController {
     @GetMapping("/{cartId}/total")
     @Transactional
     public String getTotalPrice(@PathVariable Long cartId, Model model) {
-        Cart cart = cartService.getCartById(cartId);
-        if (cart == null) {
-            return "error";
-        }
-        double totalPrice = cart.getTotalPrice();
-        model.addAttribute("totalPrice", totalPrice);
+        double totalCost = cartService.getCartTotal(cartId);
+        model.addAttribute("totalCost", totalCost);
         return "totalPrice";
     }
 

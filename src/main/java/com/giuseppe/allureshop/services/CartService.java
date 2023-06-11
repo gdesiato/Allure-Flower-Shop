@@ -150,4 +150,9 @@ public class CartService {
     public Cart saveCart(Cart cart) {
         return cartRepository.save(cart);
     }
+
+    public double getCartTotal(Long cartId) {
+        Cart cart = this.getCartById(cartId);
+        return cart.getTotalPrice();
+    }
 }

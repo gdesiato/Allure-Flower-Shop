@@ -22,36 +22,36 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
-        return http.build();
-    }
-
 //    @Bean
 //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/admin/**", "/flower/**").hasRole("ADMIN")
-//                .antMatchers("/user/**").hasRole("USER")
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeRequests()
 //                .antMatchers("/**").permitAll()
+//                .anyRequest().authenticated()
 //                .and()
-//                .formLogin();
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID")
+//                .permitAll();
 //        return http.build();
 //    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/admin/**", "/flower/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/**").permitAll()
+                .and()
+                .formLogin();
+        return http.build();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
