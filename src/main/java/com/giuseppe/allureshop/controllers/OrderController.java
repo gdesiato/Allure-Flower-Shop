@@ -6,6 +6,7 @@ import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.OrderService;
 import com.giuseppe.allureshop.services.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.logging.Logger;
 
 @Controller
 public class OrderController {
@@ -29,12 +31,14 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    private static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
+
     @PostMapping("/process-order")
     public String processOrder(@ModelAttribute("order") Order order,
                                BindingResult bindingResult,
                                Model model,
                                Principal principal,
-                               RedirectAttributes redirectAttributes) {  // add RedirectAttributes as a parameter
+                               RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "orderForm";
@@ -43,34 +47,30 @@ public class OrderController {
         User user = userService.findByUsername(principal.getName());
         order.setUser(user);
 
-        // Get the total cost from the user's cart
         Cart cart = cartService.getShoppingCartForUser(user.getUsername());
         double totalCost = cart.getTotalPrice();
-        System.out.println("Total cost: " + totalCost); // Log total cost
+        LOGGER.info("Total cost: " + totalCost);
 
-
-        // Save the total cost in the order (if you have such a field in the Order class)
         order.setTotalCost(totalCost);
 
         redirectAttributes.addFlashAttribute("totalCost", totalCost);
-        System.out.println("Stored flash attribute: " + redirectAttributes.getFlashAttributes());
+        LOGGER.info("Stored flash attribute: " + redirectAttributes.getFlashAttributes());
 
-
-        // Save the order
         orderService.save(order);
 
-        // Add total cost to the RedirectAttributes
         redirectAttributes.addFlashAttribute("totalCost", totalCost);
 
-        // If you need to display cart items on the order confirmation page
         model.addAttribute("items", cart.getItems());
 
         return "redirect:/order-confirmation";
     }
 
     @GetMapping("/order-confirmation")
-    public String orderConfirmation(Model model) {
-        System.out.println("Retrieved flash attribute: " + model.asMap());
+    public String orderConfirmation(Model model, RedirectAttributes redirectAttributes) {
+        LOGGER.info("Retrieved flash attribute: " + redirectAttributes.getFlashAttributes());
+        if (redirectAttributes.getFlashAttributes().containsKey("totalCost")) {
+            model.addAttribute("totalCost", redirectAttributes.getFlashAttributes().get("totalCost"));
+        }
         return "order-confirmation";
     }
 
