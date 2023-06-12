@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableCaching
-@EnableAspectJAutoProxy
 public class AppConfiguration {
 
     @Bean
