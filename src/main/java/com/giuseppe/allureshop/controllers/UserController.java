@@ -135,35 +135,4 @@ public class UserController implements ErrorController {
         return "redirect:/login";
     }
 
-    @PostMapping("/process-order")
-    public String processOrder(@ModelAttribute("order") Order order, Principal principal, Model model, RedirectAttributes redirectAttributes) {
-        // Get the current user
-        User user = userService.findByUsername(principal.getName());
-
-        // Set the user for the order
-        order.setUser(user);
-
-        // Get the user's cart
-        Cart userCart = cartService.findCartByUser(user);
-
-        // Process the order and clear the cart
-        Order savedOrder = orderService.processOrderAndClearCart(order, userCart);
-
-        // Add the saved order and the user as flash attributes
-        redirectAttributes.addFlashAttribute("order", savedOrder);
-        redirectAttributes.addFlashAttribute("user", user);
-
-        // Redirect the user to a confirmation page
-        return "redirect:/user/order-confirmation";
-    }
-
-    @GetMapping("/order-confirmation")
-    public String showOrderConfirmationPage(Model model) {
-        if (!model.containsAttribute("order") || !model.containsAttribute("user")) {
-            return "redirect:/user/dashboard";
-        }
-
-        return "order-confirmation";
-    }
-
 }

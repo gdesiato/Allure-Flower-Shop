@@ -35,7 +35,7 @@
     <h2>Shipping Information</h2>
 
     <!-- Form to collect shipping and payment information -->
-    <form th:action="@{/user/process-order}" th:object="${order}" method="post">
+    <form th:action="@{/process-order}" th:object="${order}" method="post">
       <div class="form-group">
         <label for="address">Address</label>
         <input type="text" class="form-control" id="address" th:field="*{address}" required>

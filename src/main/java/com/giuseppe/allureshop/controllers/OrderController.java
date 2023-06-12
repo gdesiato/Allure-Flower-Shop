@@ -6,6 +6,7 @@ import com.giuseppe.allureshop.models.User;
 import com.giuseppe.allureshop.services.CartService;
 import com.giuseppe.allureshop.services.OrderService;
 import com.giuseppe.allureshop.services.UserService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Principal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.sql.SQLOutput;
 
 @Controller
 public class OrderController {
@@ -43,29 +43,40 @@ public class OrderController {
                                Principal principal,
                                RedirectAttributes redirectAttributes) {
 
+        System.out.println("PROCESS ORDER ENDPOINT REACHED");
+
         try {
             LOGGER.info("Entered processOrder method.");
             if (bindingResult.hasErrors()) {
                 return "orderForm";
             }
 
+            // Get the current user
             User user = userService.findByUsername(principal.getName());
+
+            // Set the user for the order
             order.setUser(user);
 
-            Cart cart = cartService.getShoppingCartForUser(user.getUsername());
-            double totalCost = cart.getTotalPrice();
-            LOGGER.info("Total cost: " + totalCost);
+            // Get the user's cart
+            Cart userCart = cartService.getShoppingCartForUser(user.getUsername());
 
+            // Calculate total cost and set it to order
+            double totalCost = userCart.getTotalPrice();
             order.setTotalCost(totalCost);
 
+            // Process the order and clear the cart
+            Order savedOrder = orderService.processOrderAndClearCart(order, userCart);
+
+            // Add the saved order and the user as flash attributes
+            redirectAttributes.addFlashAttribute("order", savedOrder);
+            redirectAttributes.addFlashAttribute("user", user);
             redirectAttributes.addFlashAttribute("totalCost", totalCost);
+
+            // Add items to the model
+            model.addAttribute("items", userCart.getItems());
+
+            LOGGER.info("Total cost: " + totalCost);
             LOGGER.info("Stored flash attribute: " + redirectAttributes.getFlashAttributes());
-
-            orderService.save(order);
-
-            redirectAttributes.addFlashAttribute("totalCost", totalCost);
-
-            model.addAttribute("items", cart.getItems());
 
         } catch(Exception e) {
             StringWriter stringWriter = new StringWriter();
@@ -74,6 +85,7 @@ public class OrderController {
         }
         return "redirect:/order-confirmation";
     }
+
 
     @GetMapping("/order-confirmation")
     public String orderConfirmation(Model model, Principal principal) {
@@ -87,6 +99,7 @@ public class OrderController {
                 model.addAttribute("totalCost", order.getTotalCost());
             } else {
                 LOGGER.info("No order found for user: " + user.getUsername());
+                return "redirect:/user/dashboard";
             }
 
         } catch(Exception e) {
