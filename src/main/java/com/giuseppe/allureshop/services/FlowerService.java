@@ -3,6 +3,8 @@ package com.giuseppe.allureshop.services;
 import com.giuseppe.allureshop.exceptions.FlowerNotFoundException;
 import com.giuseppe.allureshop.models.Flower;
 import com.giuseppe.allureshop.repositories.FlowerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -18,22 +20,30 @@ public class FlowerService {
     @Autowired
     FlowerRepository flowerRepository;
 
-    //@Cacheable(value = "flowers")
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlowerService.class);
+
+
+    @Cacheable(value = "flowers")
     public List<Flower> getAllFlowers() {
+        LOGGER.info("Fetching all flowers from the database");
         return flowerRepository.findAll();
     }
 
-    //@Cacheable(value = "flower", key = "#id")
+    @Cacheable(value = "flowers", key = "#id")
     public Flower getFlowerById(Long id) {
+        LOGGER.info("Fetching flower with id {} from the database", id);
         return flowerRepository.findById(id).orElse(null);
     }
 
-    //@CacheEvict(value = "flower", key = "#id")
+    @CacheEvict(value = "flowers", key = "#id")
     public void deleteFlower(Long id) {
+        LOGGER.info("Deleting flower with id {} from the database", id);
         flowerRepository.deleteById(id);
     }
 
+    @CachePut(value = "flowers", key = "#id")
     public Flower updateFlower(Long id, Flower flower) {
+        LOGGER.info("Updating flower with id {} in the database", id);
         Optional<Flower> optionalFlower = flowerRepository.findById(id);
         if (optionalFlower.isPresent()) {
             Flower existingFlower = optionalFlower.get();
@@ -45,7 +55,7 @@ public class FlowerService {
         }
     }
 
-    //@CachePut(value = "flower", key = "#flower.id")
+    @CachePut(value = "flowers", key = "#flower.id")
     public Flower saveFlower(Flower flower) {
         return flowerRepository.save(flower);
     }
@@ -54,6 +64,7 @@ public class FlowerService {
         flowerRepository.saveAll(flowers);
     }
 
+    @CachePut(value = "flowers", key = "#flower.id")
     public void updateFlower(Flower flower) {
         Flower existingFlower = flowerRepository.findById(flower.getId())
                 .orElseThrow(() -> new FlowerNotFoundException("Sorry, there is no flower found with id " + flower.getId()));
