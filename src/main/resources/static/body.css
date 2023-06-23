@@ -15,6 +15,21 @@
     margin-bottom: 1em; /* this adds a margin to the bottom of each paragraph */
 }
 
+.table-centered {
+    margin: auto;
+    border-collapse: collapse;
+    width: 80%; /* you can adjust this */
+}
+
+.table-centered th, .table-centered td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table-centered tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
 form {
     width: 50%;
     background: #fff;
