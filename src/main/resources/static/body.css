@@ -1,0 +1,52 @@
+.center-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.center-text {
+    text-align: justify;
+    margin: auto;
+    width: 50%;
+    line-height: 1.6; /* optional, to improve readability */
+}
+
+.center-text p {
+    margin-bottom: 1em; /* this adds a margin to the bottom of each paragraph */
+}
+
+form {
+    width: 50%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    margin: auto;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"], form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+

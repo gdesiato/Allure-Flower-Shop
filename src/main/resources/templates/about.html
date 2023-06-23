@@ -3,24 +3,28 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>About</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link rel="stylesheet" type="text/css" href="body.css">
+</head>
+<body>
 
-    <div align="center">
+<div align="center">
 
-        <div layout:fragment="content" th:remove="tag">
-            <h1>About - Flower Shop</h1>
-            <p> Welcome to our flower shop! Our mission is to help our customers create a unique and personalized home environment by providing them with a wide selection of high-quality flowers and plants. We believe that surrounding oneself with nature has many benefits, including reducing stress and increasing productivity, and we want to make it easy for our customers to incorporate nature into their daily lives.
+    <div layout:fragment="content" th:remove="tag">
+        <h1>About - Flower Shop</h1>
 
-                By subscribing to our flower shop, our customers gain access to a variety of flowers and plants that are carefully selected and delivered directly to their doorstep. Our team of experts will guide our customers through the selection process, taking into account their personal preferences and home environment to ensure that each arrangement complements and enhances their living space.
+        <div class="center-text">
+            <p>Welcome to our flower shop! Our mission is to help our customers create a unique and personalized home environment by providing them with a wide selection of high-quality flowers and plants. We believe that surrounding oneself with nature has many benefits, including reducing stress and increasing productivity, and we want to make it easy for our customers to incorporate nature into their daily lives.</p>
 
-                We understand that everyone has different tastes and preferences, which is why we offer a wide range of flowers and plants to choose from. Whether you prefer classic roses, exotic orchids, or vibrant succulents, we have something for everyone.
+            <p>By subscribing to our flower shop, our customers gain access to a variety of flowers and plants that are carefully selected and delivered directly to their doorstep. Our team of experts will guide our customers through the selection process, taking into account their personal preferences and home environment to ensure that each arrangement complements and enhances their living space.</p>
 
-                At our flower shop, we believe that everyone deserves to live in a beautiful and inspiring environment, and we are dedicated to helping our customers achieve this. Join us on this journey to create a personalized home environment that truly reflects your unique personality and style.</p>
+            <p>We understand that everyone has different tastes and preferences, which is why we offer a wide range of flowers and plants to choose from. Whether you prefer classic roses, exotic orchids, or vibrant succulents, we have something for everyone.</p>
+
+            <p>At our flower shop, we believe that everyone deserves to live in a beautiful and inspiring environment, and we are dedicated to helping our customers achieve this. Join us on this journey to create a personalized home environment that truly reflects your unique personality and style.</p>
         </div>
     </div>
-    </body>
+</div>
+</body>
 </html>
