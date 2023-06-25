@@ -4,30 +4,32 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Login Page</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="body.css">
 </head>
 
 <body>
-<div layout:fragment="content" th:remove="tag">
+    <div layout:fragment="content" layout:title="Login Page" th:remove="tag">
+        <h1>Login to Allure</h1>
 
-  <h1>Login to Allure</h1>
+        <div class="center-form">
+            <form th:action="@{/login}" method="post">
+                <div>
+                  <label for="username">Username:</label>
+                  <input type="text" id="username" name="username" autofocus="autofocus" />
+                </div>
+                <div>
+                  <label for="password">Password:</label>
+                  <input type="password" id="password" name="password" />
+                </div>
+                <div>
+                  <input type="submit" value="Log in" />
+                </div>
+            </form>
+        </div>
 
-  <form th:action="@{/login}" method="post">
-    <div>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" autofocus="autofocus" />
     </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" />
-    </div>
-    <div>
-      <input type="submit" value="Log in" />
-    </div>
-  </form>
-
-</div>
 </body>
 
 </html>
+
