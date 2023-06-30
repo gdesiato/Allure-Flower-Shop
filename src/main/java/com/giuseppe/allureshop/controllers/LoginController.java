@@ -16,12 +16,13 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) throws ServletException {
+
+        // invalidating the session
         request.logout();
+
+        // redirecting to the logout page
         return "redirect:/logout-confirmation";
     }
-    /* after the session is invalidated, the user will be redirected to the logout confirmation page.
-    The redirection creates a new request, and with it a new session and security context.
-     */
 
     @GetMapping("/logout-confirmation")
     public String logoutConfirmation() {
