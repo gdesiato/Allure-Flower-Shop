@@ -51,7 +51,13 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutSuccessUrl("/login");
         return http.build();
     }
 
